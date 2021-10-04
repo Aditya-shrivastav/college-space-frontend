@@ -1,38 +1,87 @@
-.App {
-  text-align: center;
+.login-body {
+  background: linear-gradient(to bottom right, #ffffff 50%, #800000 100%);
+  height: 100vh;
+  width: 100vw;
+  font-family: "Domine", serif;
 }
 
-.App-logo {
-  height: 40vmin;
-  pointer-events: none;
+.login-form,
+.signup-form {
+  height: 100vh;
 }
 
-@media (prefers-reduced-motion: no-preference) {
-  .App-logo {
-    animation: App-logo-spin infinite 20s linear;
+.login-box {
+  width: 20em;
+  height: 70vh;
+  border: 1px solid black;
+  border-radius: 10px;
+  box-shadow: 5px 10px 18px #4d4d4d;
+}
+
+.signup-box {
+  width: 30em;
+  height: 90vh;
+  border: 1px solid black;
+  border-radius: 10px;
+  box-shadow: 5px 10px 18px #4d4d4d;
+}
+
+.signup-box div Form .form {
+  margin-left: 50px;
+}
+
+@media only screen and (max-width: 900px) {
+  .signup-intro {
+    display: none;
   }
 }
 
-.App-header {
-  background-color: #282c34;
-  min-height: 100vh;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  font-size: calc(10px + 2vmin);
-  color: white;
-}
-
-.App-link {
-  color: #61dafb;
-}
-
-@keyframes App-logo-spin {
-  from {
-    transform: rotate(0deg);
+@media only screen and (max-width: 575px) {
+  .signup-box div Form .form {
+    margin-left: 0px;
   }
-  to {
-    transform: rotate(360deg);
+  .signup-box {
+    font-size: 15px;
+    width: 25em;
+  }
+  .signup-box div Form .section,
+  .signup-box div Form .semester,
+  .signup-box div Form .branch,
+  .signup-box div Form .userType {
+    width: 45%;
+    margin-right: 4%;
+  }
+  .signup-box div Form Button {
+  }
+}
+
+@media only screen and (max-width: 520px) {
+  .signup-box {
+    width: 70%;
+    font-size: 10px;
+  }
+  .signup-form {
+    margin-left: 0;
+  }
+}
+
+@media only screen and (max-width: 770px) {
+  .logo,
+  .intro,
+  .signup-logo {
+    display: none;
+  }
+}
+
+@media only screen and (max-width: 360px) {
+  .login-box {
+    width: 70%;
+    font-size: 10px;
+  }
+  .signup-box {
+    width: 85%;
+  }
+  .signup-box div Form {
+    font-size: "2px";
   }
 }
