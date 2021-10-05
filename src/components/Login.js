@@ -6,7 +6,7 @@ import { Link } from 'react-router-dom';
 import { NotificationManager, NotificationContainer } from 'react-notifications/';
 import history from '../shared/history';
 
-const Login = ({ login = () => { } }) => {
+const Login = ({ login = () => { }, getUser = () => { } }) => {
 
     const [values, setValues] = useState({
         email: '',
@@ -35,10 +35,16 @@ const Login = ({ login = () => { } }) => {
             if (res.success) {
                 NotificationManager.success('Logged in successfully!');
                 history.push('/home')
+                return true;
             }
             else {
                 NotificationManager.error('Login Error');
+                return false;
             }
+        }).then((res) => {
+            console.log(res)
+            if (res)
+                getUser();
         })
 
     }

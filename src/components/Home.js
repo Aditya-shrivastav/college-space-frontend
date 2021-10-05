@@ -1,10 +1,16 @@
-import React from 'react';
-import { Row, Col, Container, conta } from 'reactstrap'
-const Home = () => {
+import React, { useState } from 'react';
+import SideBar from './Sidebar';
+import SidePanel from './SidePanel';
+const Home = ({ user }) => {
+
+    const [isSidebarOpen, setSidebarOpen] = useState(true);
+    const toggleSidebar = () => setSidebarOpen(!isSidebarOpen);
+
     return (
-        <Container fluid>
-            Home
-        </Container>
+        <div className="App">
+            <SideBar toggle={toggleSidebar} isOpen={isSidebarOpen} />
+            <SidePanel toggleSidebar={toggleSidebar} sideBarIsOpen={isSidebarOpen} user={user} />
+        </div>
     )
 }
 

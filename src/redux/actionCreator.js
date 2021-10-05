@@ -43,7 +43,7 @@ export const loginUser = (creds) => (dispatch) => {
     }).then((response) => {
 
         if (response.token) {
-
+            localStorage.setItem('token', response.token)
             dispatch(loginSuccess(response))
 
         } else {
@@ -74,7 +74,7 @@ export const signupError = (err) => {
 }
 
 export const signupUser = (creds) => (dispatch) => {
-    return axios('http://localhost:5000', {
+    return axios('http://localhost:5000/users/signup', {
         method: 'POST',
         headers: {
             'Content-Type': 'application/json'
@@ -103,4 +103,55 @@ export const signupUser = (creds) => (dispatch) => {
         dispatch(signupError(err?.response?.data?.message))
         return { success: false, err: err?.response?.data?.message }
     })
-} 
+}
+
+export const getUserSuccess = (creds) => {
+    return {
+        type: actionTypes.GET_USER_SUCCESS,
+        payload: {
+            creds
+        }
+    }
+}
+
+export const getUserFailed = (err) => {
+    return {
+        type: actionTypes.GET_USER_FAILURE,
+        payload: {
+            err
+        }
+    }
+}
+
+export const getUser = () => (dispatch) => {
+
+    let token = localStorage.getItem('token');
+
+    return axios('http://localhost:5000/users/getUser', {
+        method: 'GET',
+        headers: {
+            'x-auth-token': token
+        }
+    }).then((response) => {
+        if (response.status === 200) {
+            return response.data;
+        } else {
+            var err = new Error('Error ' + response.status + ': ' + response.statusText)
+            err.response = response;
+            throw err;
+        }
+    }).then((response) => {
+        if (response.success) {
+
+            dispatch(getUserSuccess(response.user))
+            return response;
+        } else {
+            var err = new Error('Error ' + response.status + ': ' + response.statusText)
+            err.response = response;
+            throw err;
+        }
+    }).catch((err) => {
+        dispatch(getUserFailed({ err: err?.response?.data?.message }))
+        return { success: false, err: err?.response?.data?.message }
+    })
+}

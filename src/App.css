@@ -1,3 +1,9 @@
+.App {
+  display: flex;
+  width: 100vw;
+  height: 100vh;
+}
+
 .login-body {
   background: linear-gradient(to bottom right, #ffffff 50%, #800000 100%);
   height: 100vh;
@@ -30,30 +36,137 @@
   margin-left: 50px;
 }
 
-@media only screen and (max-width: 900px) {
-  .signup-intro {
-    display: none;
-  }
+.sidebar {
+  min-width: 320px;
+  max-width: 320px;
+  background: #7386d5;
+  color: white;
+  height: 100vh;
+  margin-left: -320px;
+  transition: all 0.5s;
 }
 
-@media only screen and (max-width: 575px) {
-  .signup-box div Form .form {
-    margin-left: 0px;
-  }
-  .signup-box {
-    font-size: 15px;
-    width: 25em;
-  }
-  .signup-box div Form .section,
-  .signup-box div Form .semester,
-  .signup-box div Form .branch,
-  .signup-box div Form .userType {
-    width: 45%;
-    margin-right: 4%;
-  }
-  .signup-box div Form Button {
-  }
+.sidebar.is-open {
+  margin-left: 0;
+  transition: 0.5s;
 }
+
+.sidebar-header {
+  background: #6699ff;
+  border-bottom: 2px solid black;
+}
+
+.sidebar-header h4 {
+  color: white;
+  padding: 1em;
+}
+
+.nav-item:hover {
+  color: #7386d5;
+  background: #fff;
+}
+
+.nav-item .nav-link{
+  color: white;
+  padding-top: 10px; 
+}
+
+.sidebar-header > span {
+  position: relative;
+  float: right;
+  margin: 0.5em;
+  font-size: 2rem;
+  cursor: pointer;
+  display: none;
+}
+.side-menu {
+  height: calc(100vh - 130px);
+  /* overflow-y: scroll; */
+}
+
+.sidepanel{
+  padding: 50px;
+}
+
+.sidepanel .user-details .user-img{
+    text-align: center;
+    padding-bottom: 10px;
+}
+
+.sidepanel .row{
+  overflow: hidden; 
+  text-overflow: ellipsis;
+  font-size: 22px;
+  font-family: "Domine", serif;
+}
+
+.sidepanel .user-details{
+  background: white;
+  box-shadow:  1rem 1rem 2rem rgba(0,0,0,.3);
+  border-radius: 1em;
+  padding: 20px;
+}
+
+.sidepanel .user-details .user-info .details{
+  padding: 10px;
+}
+
+.content {
+  padding: 20px;
+  margin-left: 0;
+  height: 100vh;
+  background:linear-gradient(to top right, #f2f2f2 5%, #ff5050 90%, #b3ccff 5%);
+}
+/* 
+.side-menu::-webkit-scrollbar {
+  width: 10px;
+}
+
+.side-menu::-webkit-scrollbar-thumb {
+  background: #5466b3;
+  border-radius: 3px;
+}
+
+.side-menu::-webkit-scrollbar-thumb:hover {
+  background: #3a4c99;
+} */
+
+@media only screen and (max-width: 500px) {
+  body {
+    overflow: hidden;
+  }
+
+  .content.is-open {
+    display: none;
+  }
+
+  .sidebar.is-open {
+    min-width: 100%;
+    max-width: 100%;
+    margin-left: 0;
+    transition: all 0.5s, height 0s;
+  }
+
+  .sidebar.is-open > .sidebar-header span {
+    display: unset;
+  }
+
+  .sidepanel .row{
+    padding-top: 10px;
+    font-size: 15px;
+  }
+
+  .sidepanel{
+    padding: 0px;
+  }
+
+  .user-img img{
+    width: 80px;
+    height: 80px;
+  }
+
+}
+
 
 @media only screen and (max-width: 520px) {
   .signup-box {
@@ -62,6 +175,19 @@
   }
   .signup-form {
     margin-left: 0;
+  }
+  .content.is-open {
+    display: none;
+  }
+
+  .sidebar.is-open {
+    min-width: 100%;
+    max-width: 100%;
+    margin-left: 0;
+    transition: all 0.5s, height 0s;
+  }
+  .sidebar.is-open > .sidebar-header span {
+    display: unset;
   }
 }
 
@@ -84,4 +210,77 @@
   .signup-box div Form {
     font-size: "2px";
   }
+  .sidebar{
+    height: 100vh;
+  }
+}
+
+@media all and (device-width: 768px) and (device-height: 1024px) and (orientation:portrait) {
+  .content.is-open {
+    display: none;
+  }
+
+  .sidebar.is-open {
+    min-width: 100%;
+    max-width: 100%;
+    margin-left: 0;
+    transition: all 0.5s, height 0s;
+  }
+  .sidebar.is-open > .sidebar-header span {
+    display: unset;
+  }
+}
+@media all and (device-width: 1024px) and (device-height: 768px) and (orientation:landscape) {
+  .content.is-open {
+    display: none;
+  }
+
+  .sidebar.is-open {
+    min-width: 100%;
+    max-width: 100%;
+    margin-left: 0;
+    transition: all 0.5s, height 0s;
+  }
+  .sidebar.is-open > .sidebar-header span {
+    display: unset;
+  }
+}
+
+@media only screen and (max-width: 900px) {
+  
+  .signup-intro {
+    display: none;
+  }
+  .content.is-open {
+    display: none;
+  }
+
+  .sidebar.is-open {
+    min-width: 100%;
+    max-width: 100%;
+    margin-left: 0;
+    transition: all 0.5s, height 0s;
+  }
+
+  .sidebar.is-open > .sidebar-header span {
+    display: unset;
+  }
+}
+
+@media only screen and (max-width: 575px) {
+  .signup-box div Form .form {
+    margin-left: 0px;
+  }
+  .signup-box {
+    font-size: 15px;
+    width: 25em;
+  }
+  .signup-box div Form .section,
+  .signup-box div Form .semester,
+  .signup-box div Form .branch,
+  .signup-box div Form .userType {
+    width: 45%;
+    margin-right: 4%;
+  }
+
 }
