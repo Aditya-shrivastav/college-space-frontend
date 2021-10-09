@@ -1,17 +1,33 @@
 import React, { useState } from 'react';
 import SideBar from './Sidebar';
-import SidePanel from './SidePanel';
-const Home = ({ user }) => {
+import DashboardPage from './Dashboard';
+import AttendancePage from './Attendance';
+
+
+const Dashboard = ({ user, logout = () => { }, attendance = () => { } }) => {
 
     const [isSidebarOpen, setSidebarOpen] = useState(true);
     const toggleSidebar = () => setSidebarOpen(!isSidebarOpen);
 
     return (
         <div className="App">
-            <SideBar toggle={toggleSidebar} isOpen={isSidebarOpen} />
-            <SidePanel toggleSidebar={toggleSidebar} sideBarIsOpen={isSidebarOpen} user={user} />
+            <SideBar toggle={toggleSidebar} isOpen={isSidebarOpen} user={user} logout={logout} attendance={attendance} />
+            <DashboardPage toggleSidebar={toggleSidebar} sideBarIsOpen={isSidebarOpen} user={user} />
         </div>
     )
 }
 
-export default Home;
+const Attendance = ({ user, logout = () => { }, attendance = () => { } }) => {
+
+    const [isSidebarOpen, setSidebarOpen] = useState(true);
+    const toggleSidebar = () => setSidebarOpen(!isSidebarOpen);
+
+    return (
+        <div className="App">
+            <SideBar toggle={toggleSidebar} isOpen={isSidebarOpen} user={user} logout={logout} attendance={attendance} />
+            <AttendancePage toggleSidebar={toggleSidebar} sideBarIsOpen={isSidebarOpen} user={user} />
+        </div>
+    )
+}
+
+export { Dashboard, Attendance };

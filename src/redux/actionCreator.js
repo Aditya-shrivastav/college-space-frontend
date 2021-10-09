@@ -1,6 +1,7 @@
 import * as actionTypes from './actionTypes';
 import axios from 'axios';
 import dotenv from 'dotenv';
+import { baseUrl } from '../shared/constants';
 dotenv.config();
 
 export const loginError = (err) => {
@@ -23,7 +24,7 @@ export const loginSuccess = (response) => {
 
 export const loginUser = (creds) => (dispatch) => {
 
-    return axios('http://localhost:5000/users/login', {
+    return axios(`${baseUrl}/users/login`, {
         method: 'POST',
         headers: {
             'Content-Type': 'application/json',
@@ -44,6 +45,7 @@ export const loginUser = (creds) => (dispatch) => {
 
         if (response.token) {
             localStorage.setItem('token', response.token)
+            localStorage.setItem('userType', response.userType)
             dispatch(loginSuccess(response))
 
         } else {
@@ -127,7 +129,7 @@ export const getUser = () => (dispatch) => {
 
     let token = localStorage.getItem('token');
 
-    return axios('http://localhost:5000/users/getUser', {
+    return axios(`${baseUrl}/users/getUser`, {
         method: 'GET',
         headers: {
             'x-auth-token': token
@@ -153,5 +155,40 @@ export const getUser = () => (dispatch) => {
     }).catch((err) => {
         dispatch(getUserFailed({ err: err?.response?.data?.message }))
         return { success: false, err: err?.response?.data?.message }
+    })
+}
+
+export const logoutSuccess = () => {
+    return {
+        type: actionTypes.LOGOUT_SUCCESS
+    }
+}
+
+export const logoutReducer = () => (dispatch) => {
+    localStorage.clear();
+    dispatch(logoutSuccess())
+}
+
+
+export const fetchAttendaceSuccess = (creds) => {
+    return {
+        type: actionTypes.FETCH_ATTENDANCE_SUCCESS,
+        payload: {
+            creds
+        }
+    }
+}
+
+
+export const fetchAttendace = () => (dispatch) => {
+
+    return axios(`${baseUrl}/students/getAttendance`, {
+        method: 'GET',
+        headers: {
+            'x-auth-token': localStorage.getItem('token')
+        }
+    }).then((resp) => {
+        console.log(resp.data.attendance)
+        dispatch(fetchAttendaceSuccess(resp.data.attendance))
     })
 }

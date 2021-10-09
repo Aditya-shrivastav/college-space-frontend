@@ -34,7 +34,7 @@ const Login = ({ login = () => { }, getUser = () => { } }) => {
             console.log(res)
             if (res.success) {
                 NotificationManager.success('Logged in successfully!');
-                history.push('/home')
+                history.push('/dashboard')
                 return true;
             }
             else {

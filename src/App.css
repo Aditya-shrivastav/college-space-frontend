@@ -85,7 +85,10 @@
 }
 
 .sidepanel{
-  padding: 50px;
+  padding-top: 10px;
+  padding-left: 60px;
+  padding-right: 60px;
+  padding-bottom: 50px;
 }
 
 .sidepanel .user-details .user-img{
@@ -117,6 +120,25 @@
   height: 100vh;
   background:linear-gradient(to top right, #f2f2f2 5%, #ff5050 90%, #b3ccff 5%);
 }
+
+.content .panel-header-row{
+  height: '50px' !important;
+  margin: '0 0.5em' !important;
+  padding: '0 0.2em' !important;
+  
+}
+
+.attendance-cards{
+  overflow-y: scroll;
+  height: 85vh;
+  -ms-overflow-style: none;  /* IE and Edge */
+  scrollbar-width: none;
+}
+
+.attendance-cards::-webkit-scrollbar {
+  display: none;
+}
+
 /* 
 .side-menu::-webkit-scrollbar {
   width: 10px;
@@ -132,9 +154,9 @@
 } */
 
 @media only screen and (max-width: 500px) {
-  body {
+  /* body {
     overflow: hidden;
-  }
+  } */
 
   .content.is-open {
     display: none;
@@ -189,6 +211,10 @@
   .sidebar.is-open > .sidebar-header span {
     display: unset;
   }
+  .attendance-cards{
+    height: 78vh;
+  }
+  
 }
 
 @media only screen and (max-width: 770px) {
@@ -213,6 +239,7 @@
   .sidebar{
     height: 100vh;
   }
+  
 }
 
 @media all and (device-width: 768px) and (device-height: 1024px) and (orientation:portrait) {
@@ -229,6 +256,7 @@
   .sidebar.is-open > .sidebar-header span {
     display: unset;
   }
+
 }
 @media all and (device-width: 1024px) and (device-height: 768px) and (orientation:landscape) {
   .content.is-open {
@@ -244,6 +272,7 @@
   .sidebar.is-open > .sidebar-header span {
     display: unset;
   }
+
 }
 
 @media only screen and (max-width: 900px) {
@@ -264,6 +293,29 @@
 
   .sidebar.is-open > .sidebar-header span {
     display: unset;
+  }
+
+  .sidepanel .row{
+    padding-top: 10px;
+    font-size: 15px;
+  }
+
+  .sidepanel{
+    padding: 0px;
+  }
+
+  .user-img img{
+    width: 80px;
+    height: 80px;
+  }
+
+  .content #panel-header-row{
+    margin: 0 !important;
+    padding: 0 !important;
+  }
+
+  .attendance-cards{
+    height: 75vh;
   }
 }
 

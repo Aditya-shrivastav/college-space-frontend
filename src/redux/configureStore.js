@@ -1,18 +1,25 @@
-import { createStore, combineReducers, applyMiddleware, compose } from 'redux';
+import { createStore, applyMiddleware, compose } from 'redux';
 import thunk from 'redux-thunk';
-import { loginReducer } from './loginReducer';
-import { signupReducer } from './signupReducer';
-import { userReducer } from './userReducer';
+import { persistStore, persistReducer } from 'redux-persist'
+import storage from 'redux-persist/lib/storage'
+import { rootReducer } from './rootReducer';
+
+const persistConfig = {
+    key: 'root',
+    storage,
+    whitelist: ['login', 'user']
+}
+
+
+const persistedReducer = persistReducer(persistConfig, rootReducer)
 
 export const configureStore = () => {
     const store = createStore(
-        combineReducers({
-            login: loginReducer,
-            signup: signupReducer,
-            user: userReducer
-        }),
+        persistedReducer,
         compose(applyMiddleware(thunk), window.__REDUX_DEVTOOLS_EXTENSION__ && window.__REDUX_DEVTOOLS_EXTENSION__())
     )
 
-    return store;
+    const persistor = persistStore(store)
+
+    return { store, persistor };
 }
