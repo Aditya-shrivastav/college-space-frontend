@@ -1,7 +1,7 @@
-import * as actionTypes from './actionTypes';
 import axios from 'axios';
 import dotenv from 'dotenv';
 import { baseUrl } from '../shared/constants';
+import * as actionTypes from './actionTypes';
 dotenv.config();
 
 export const loginError = (err) => {
@@ -45,7 +45,7 @@ export const loginUser = (creds) => (dispatch) => {
 
         if (response.token) {
             localStorage.setItem('token', response.token)
-            localStorage.setItem('userType', response.userType)
+            localStorage.setItem('userId', response.userId)
             dispatch(loginSuccess(response))
 
         } else {
@@ -138,17 +138,17 @@ export const getUser = () => (dispatch) => {
         if (response.status === 200) {
             return response.data;
         } else {
-            var err = new Error('Error ' + response.status + ': ' + response.statusText)
+            var err = new Error('Error ' + response.status + ': ' + response.statusText);
             err.response = response;
             throw err;
         }
     }).then((response) => {
         if (response.success) {
-
-            dispatch(getUserSuccess(response.user))
+            localStorage.setItem('user', response.user.userType);
+            dispatch(getUserSuccess(response.user));
             return response;
         } else {
-            var err = new Error('Error ' + response.status + ': ' + response.statusText)
+            var err = new Error('Error ' + response.status + ': ' + response.statusText);
             err.response = response;
             throw err;
         }
@@ -190,5 +190,87 @@ export const fetchAttendace = () => (dispatch) => {
     }).then((resp) => {
         console.log(resp.data.attendance)
         dispatch(fetchAttendaceSuccess(resp.data.attendance))
+    })
+}
+
+export const fetchCoursesOfFacultySuccess = (creds) => {
+    return {
+        type: actionTypes.FETCH_FACULTY_COURSE_SUCCESS,
+        payload: {
+            creds
+        }
+    }
+}
+
+export const fetchCoursesOfFaculty = () => (dispatch) => {
+    return axios(`${baseUrl}/courses/getCourses`, {
+        method: 'GET',
+        headers: {
+            'x-auth-token': localStorage.getItem('token')
+        }
+    }).then((resp) => {
+        dispatch(fetchCoursesOfFacultySuccess(resp.data.courses))
+    })
+}
+
+export const fetchStudentCoursesSuccess = (creds) => {
+    return {
+        type: actionTypes.FETCH_STUDENT_COURSE_SUCCESS,
+        payload: {
+            creds
+        }
+    }
+}
+
+export const fetchStudentCourses = () => (dispatch) => {
+    return axios(`${baseUrl}/courses/getStudentCourses`, {
+        method: 'GET',
+        headers: {
+            'x-auth-token': localStorage.getItem('token')
+        }
+    }).then((resp) => {
+        dispatch(fetchStudentCoursesSuccess(resp.data.courses))
+    })
+}
+
+export const fetchStudentTimeTableSuccess = (creds) => {
+    return {
+        type: actionTypes.FETCH_STUDENT_TIME_TABLE,
+        payload: {
+            creds
+        }
+    }
+}
+
+
+export const fetchStudentTimeTable = () => (dispatch) => {
+    return axios(`${baseUrl}/students/getTimeTable`, {
+        method: 'GET',
+        headers: {
+            'x-auth-token': localStorage.getItem('token')
+        }
+    }).then((resp) => {
+        dispatch(fetchStudentTimeTableSuccess(resp.data.timeTable))
+    })
+}
+
+
+export const fetchUnreadEventsSuccess = (creds) => {
+    return {
+        type: actionTypes.FETCH_EVENT_SUCCESS,
+        payload: { creds }
+    }
+}
+
+export const fetchUnreadEvents = () => (dispatch) => {
+    return axios(`${baseUrl}/students/checkUnreadEvents`, {
+        method: 'GET',
+        headers: {
+            'x-auth-token': localStorage.getItem('token')
+        }
+    }).then((resp) => {
+        console.log(resp.data)
+        console.log('hey')
+        dispatch(fetchUnreadEventsSuccess(resp.data.unreadMessages))
     })
 }

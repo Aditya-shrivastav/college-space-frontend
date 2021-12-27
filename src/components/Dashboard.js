@@ -1,13 +1,14 @@
+import { faAlignLeft, faChevronRight } from '@fortawesome/free-solid-svg-icons';
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import axios from 'axios';
+import classNames from 'classnames';
+import { getDownloadURL, getStorage, ref, uploadBytesResumable } from 'firebase/storage';
 import React, { useState } from 'react';
 import ReactLoading from 'react-loading';
-import { Container, Button, Row, Col, Modal, ModalBody, ModalHeader } from 'reactstrap';
-import classNames from 'classnames';
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faAlignLeft, faChevronRight } from '@fortawesome/free-solid-svg-icons';
+import { NotificationContainer, NotificationManager } from 'react-notifications';
+import { Button, Col, Container, Modal, ModalBody, ModalFooter, ModalHeader, Row } from 'reactstrap';
 import app from '../firebaseConfig';
-import axios from 'axios';
 import { baseUrl, STUDENT, TEACHER } from "../shared/constants";
-import { getStorage, ref, uploadBytesResumable, getDownloadURL } from 'firebase/storage';
 
 const storage = getStorage(app);
 
@@ -15,24 +16,32 @@ const DashboardPage = ({ toggleSidebar, sideBarIsOpen, user }) => {
 
     const [values, setValue] = useState({
         file: null,
-        isOpen: false,
-        image: '/default-user.jpg'
+        image: user.user.imageUrl ? user.user.imageUrl : '/default-user.jpg'
     })
 
-    const handleChange = (event) => {
+    const [isOpen, toggle] = useState(false);
+
+    const handleFileChange = (event) => {
         if (event.target.files[0]) {
             console.log(event.target.files[0])
             setValue({ ...values, file: event.target.files[0] });
         }
     }
 
-    const handleUpload = () => {
+    const handleUpload = (event) => {
+
+        event.preventDefault()
+
+        if (!values.file) {
+            NotificationManager.error('Please choose a file');
+            return;
+        }
+
+        toggleModal();
 
         const storageRef = ref(storage, `user/images/${values.file.name}`);
 
         const uploadTask = uploadBytesResumable(storageRef, values.file);
-
-        toggleModal();
 
         uploadTask.on('state_changed',
             (snapshot) => {
@@ -54,6 +63,7 @@ const DashboardPage = ({ toggleSidebar, sideBarIsOpen, user }) => {
                 return false;
             },
             () => {
+                console.log(uploadTask.snapshot.ref);
                 getDownloadURL(uploadTask.snapshot.ref).then((url) => {
                     console.log(url);
                     axios(`${baseUrl}/users/updateImage`, {
@@ -65,7 +75,7 @@ const DashboardPage = ({ toggleSidebar, sideBarIsOpen, user }) => {
                         data: { url }
                     }).then((res) => {
                         if (res.data.message === 'success')
-                            setValue({ ...values, image: url })
+                            setValue({ ...values, image: url });
                     })
                     return url;
                 })
@@ -74,7 +84,7 @@ const DashboardPage = ({ toggleSidebar, sideBarIsOpen, user }) => {
         )
     }
 
-    const toggleModal = () => setValue({ ...values, isOpen: !values.isOpen });
+    const toggleModal = () => toggle(!isOpen)
 
 
     return (
@@ -101,15 +111,22 @@ const DashboardPage = ({ toggleSidebar, sideBarIsOpen, user }) => {
                         <div class="user-details">
                             <Row className="user-img">
                                 <Col xs={12} >
-                                    <img src={user.user.imageUrl ? user.user.imageUrl : values.image} className="rounded-circle" alt="default" height="150" width="150" />
+                                    <img src={values.image} className="rounded-circle" alt="default" height="150" width="150" />
                                 </Col>
                                 <Col xs={12} style={{ paddingTop: '30px' }}>
-                                    <Modal isOpen={values.isOpen} toggle={toggleModal}>
-                                        <ModalHeader toggle={toggleModal}>Choose File:</ModalHeader>
+                                    <Modal isOpen={isOpen} toggle={toggleModal}>
+                                        <ModalHeader>Choose File:</ModalHeader>
                                         <ModalBody>
-                                            <input type="file" onChange={handleChange} />
-                                            <Button size="sm" color="primary" onClick={handleUpload}>Update Image</Button>
+                                            <div className="form-group">
+                                                <input className="form-control" type="file" id="formFile" onChange={handleFileChange} />
+                                            </div>
                                         </ModalBody>
+                                        <ModalFooter>
+                                            <Button color="primary" onClick={handleUpload} size='sm'>
+                                                Upload Files
+                                            </Button>
+                                            <Button onClick={toggle} size='sm' color="black">Cancel</Button>
+                                        </ModalFooter>
                                     </Modal>
                                     <Button size="sm" color="primary" onClick={toggleModal}>
                                         Upload Image
@@ -163,6 +180,7 @@ const DashboardPage = ({ toggleSidebar, sideBarIsOpen, user }) => {
                                 </Col>
                             </Row>
                         </div>
+                        <NotificationContainer />
                     </Row> :
                     <div style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', height: '100vh' }}>
                         <ReactLoading type={"spin"} color={"blue"} height={'50px'} width={'50px'} />

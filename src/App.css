@@ -1,3 +1,7 @@
+body{
+  overflow: hidden;
+}
+
 .App {
   display: flex;
   width: 100vw;
@@ -19,7 +23,6 @@
 .login-box {
   width: 20em;
   height: 70vh;
-  border: 1px solid black;
   border-radius: 10px;
   box-shadow: 5px 10px 18px #4d4d4d;
 }
@@ -62,13 +65,21 @@
 }
 
 .nav-item:hover {
-  color: #7386d5;
   background: #fff;
 }
 
 .nav-item .nav-link{
   color: white;
   padding-top: 10px; 
+}
+
+.nav-item .nav-link:hover{
+  color: #7386d5
+}
+
+.sidebar-active-tab{
+  background: #fff;
+  color: #7386d5 !important;
 }
 
 .sidebar-header > span {
@@ -118,6 +129,7 @@
   padding: 20px;
   margin-left: 0;
   height: 100vh;
+  font-family: 'Domine', serif;
   background:linear-gradient(to top right, #f2f2f2 5%, #ff5050 90%, #b3ccff 5%);
 }
 
@@ -128,15 +140,75 @@
   
 }
 
-.attendance-cards{
+.attendance-cards, .events-cards{
   overflow-y: scroll;
   height: 85vh;
   -ms-overflow-style: none;  /* IE and Edge */
   scrollbar-width: none;
 }
 
-.attendance-cards::-webkit-scrollbar {
+.attendance-cards::-webkit-scrollbar, .students-list::-webkit-scrollbar, .timetable-cards::-webkit-scrollbar, .events-cards::-webkit-scrollbar{
   display: none;
+}
+
+.students-list{
+  overflow-y: scroll;
+  height: 60vh;
+  font-size: 18px;
+  -ms-overflow-style: none;  /* IE and Edge */
+  scrollbar-width: none;
+}
+
+.events-cards #event-rows{
+  margin: 2em
+} 
+
+.timetable-cards{
+  overflow-y: scroll;
+  height: 75vh;
+  -ms-overflow-style: none;  /* IE and Edge */
+  scrollbar-width: none;
+}
+
+.courses-cards{
+  overflow-y: scroll;
+  height: 85vh;
+  -ms-overflow-style: none;  /* IE and Edge */
+  scrollbar-width: none;
+}
+
+.courses-cards::-webkit-scrollbar{
+  display: none;
+}
+
+
+.content .uploaded-files, .content #user-chats{
+  overflow-y: scroll;
+  height: 70vh;
+  -ms-overflow-style: none;  /* IE and Edge */
+  scrollbar-width: none;
+}
+
+.content .uploaded-files::-webkit-scrollbar, .content .uploaded-files .row .col::-webkit-scrollbar, .content #user-chats::-webkit-scrollbar{
+  display: none;
+}
+
+.content .row #selectDay select{
+ background: #b3ccff;
+ padding: 5px;
+ border-radius: 10px;
+ border: 2px solid white;
+}
+
+.input-group.md-form.form-sm.form-1 input {
+  border: 1px solid #bdbdbd;
+  border-top-right-radius: 0.25rem;
+  border-bottom-right-radius: 0.25rem;
+}
+
+.content .row #user-chats{
+  background: 'black' !important;
+  border: '1px solid black' ;
 }
 
 /* 
@@ -211,10 +283,19 @@
   .sidebar.is-open > .sidebar-header span {
     display: unset;
   }
-  .attendance-cards{
+  .attendance-cards, .events-cards{
     height: 78vh;
   }
-  
+  .timetable-cards{
+    height: 40vh;
+  }
+  .students-list{
+    height: 40vh;
+    font-size: 15px;
+  }
+  .course-wrapper{
+    margin: '10px'
+  }
 }
 
 @media only screen and (max-width: 770px) {
@@ -314,8 +395,24 @@
     padding: 0 !important;
   }
 
-  .attendance-cards{
+  .attendance-cards, .events-cards{
     height: 75vh;
+  }
+
+  .events-cards #event-rows{
+    margin: 0.2em
+  } 
+
+  .courses-cards{
+    height: 75vh;
+  }
+
+  .content .uploaded-files{
+    height: 60vh;
+  }
+
+  .timetable-cards{
+    height: 60vh;
   }
 }
 
@@ -334,5 +431,11 @@
     width: 45%;
     margin-right: 4%;
   }
+  
+}
 
+@media only screen and (max-width: 345px){
+  .content .uploaded-files{
+    height: 55vh;
+  }
 }
