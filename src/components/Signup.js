@@ -53,7 +53,7 @@ const Signup = ({ signup = () => { } }) => {
         <div className="login-body container-fluid">
             <div className="row">
                 <div className="mt-5 col-2 signup-logo" style={{ textAlign: 'end' }}>
-                    <img src="/Galgotias_University.png" alt="logo" width="55%" />
+                    <img src="../images/Galgotias_University.png" alt="logo" width="55%" />
                 </div>
                 <div className="col-3 mt-4 p-10 signup-intro">
                     <div style={{ marginTop: '70%', fontSize: '25px', fontStyle: 'italic', marginBottom: '10px', textDecoration: 'underline' }}>

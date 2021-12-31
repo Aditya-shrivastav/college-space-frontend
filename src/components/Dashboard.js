@@ -9,6 +9,7 @@ import { NotificationContainer, NotificationManager } from 'react-notifications'
 import { Button, Col, Container, Modal, ModalBody, ModalFooter, ModalHeader, Row } from 'reactstrap';
 import app from '../firebaseConfig';
 import { baseUrl, STUDENT, TEACHER } from "../shared/constants";
+import GuLogo from '../images/Galgotias_University.png'
 
 const storage = getStorage(app);
 
@@ -16,7 +17,7 @@ const DashboardPage = ({ toggleSidebar, sideBarIsOpen, user }) => {
 
     const [values, setValue] = useState({
         file: null,
-        image: user.user.imageUrl ? user.user.imageUrl : '/default-user.jpg'
+        image: user.user.imageUrl ? user.user.imageUrl : '../images/default-user.jpg'
     })
 
     const [isOpen, toggle] = useState(false);
@@ -88,105 +89,111 @@ const DashboardPage = ({ toggleSidebar, sideBarIsOpen, user }) => {
 
 
     return (
-        <Container
-            fluid
-            className={classNames("content", { "is-open": sideBarIsOpen })}
-        >
-            {
-                !sideBarIsOpen ?
-                    <Button color="gray" onClick={toggleSidebar} style={{ marginBottom: '10px', border: '1px solid black' }}>
-                        <FontAwesomeIcon icon={faAlignLeft} />
-                    </Button> :
-                    <div style={{ display: 'none' }}></div>
+        <>
+            <div className="vector"></div>
+            <Container
+                fluid
+                className={classNames("content", { "is-open": sideBarIsOpen })}
+            >
+                {
+                    !sideBarIsOpen ?
+                        <Button color="gray" onClick={toggleSidebar} style={{ marginBottom: '10px', border: '1px solid black' }}>
+                            <FontAwesomeIcon icon={faAlignLeft} />
+                        </Button> :
+                        <div style={{ display: 'none' }}></div>
 
-            }
-            <Row id='panel-header-row' style={{ height: '50px', margin: '0 0.5em', padding: '0 0.2em' }}>
-                <Col xs={12} style={{ alignSelf: 'center', fontFamily: 'Domine', fontSize: '18px' }}>
-                    Dashboard<FontAwesomeIcon icon={faChevronRight} style={{ marginLeft: '5px' }} />
-                </Col>
-            </Row>
-            {
-                user.success ?
-                    <Row className="sidepanel" >
-                        <div class="user-details">
-                            <Row className="user-img">
-                                <Col xs={12} >
-                                    <img src={values.image} className="rounded-circle" alt="default" height="150" width="150" />
-                                </Col>
-                                <Col xs={12} style={{ paddingTop: '30px' }}>
-                                    <Modal isOpen={isOpen} toggle={toggleModal}>
-                                        <ModalHeader>Choose File:</ModalHeader>
-                                        <ModalBody>
-                                            <div className="form-group">
-                                                <input className="form-control" type="file" id="formFile" onChange={handleFileChange} />
-                                            </div>
-                                        </ModalBody>
-                                        <ModalFooter>
-                                            <Button color="primary" onClick={handleUpload} size='sm'>
-                                                Upload Files
-                                            </Button>
-                                            <Button onClick={toggle} size='sm' color="black">Cancel</Button>
-                                        </ModalFooter>
-                                    </Modal>
-                                    <Button size="sm" color="primary" onClick={toggleModal}>
-                                        Upload Image
-                                    </Button>
-                                </Col>
-                            </Row>
-                            <Row className="user-info">
-                                <Col xs={12} className="details">
-                                    Name: {user.user.name}
-                                </Col>
-                                <Col xs={12} className="details">
-                                    Email: {user.user.email}
-                                </Col>
-                                {
-                                    user.user.userType === STUDENT ?
-                                        <>
-                                            <Col xs={12} className="details">
-                                                Section: {user.user.section}
-                                            </Col>
-                                            <Col xs={12} className="details">
-                                                Semester: {user.user.semester}
-                                            </Col>
-                                            <Col xs={12} className="details">
-                                                Branch: {user.user.branch}
-                                            </Col>
-                                        </> :
-                                        user.user.userType === TEACHER ?
+                }
+                <Row id='panel-header-row' style={{ height: '50px', margin: '0 0.5em', padding: '0 0.2em', marginBottom: '3em' }}>
+                    <Col xs={12} md={6} style={{ alignSelf: 'center', fontFamily: 'Domine', fontSize: '18px', color: '#7EACF8' }}>
+                        Dashboard<FontAwesomeIcon icon={faChevronRight} style={{ marginLeft: '5px' }} />
+                    </Col>
+                    <Col xs={12} md={6} style={{ textAlign: 'end' }}>
+                        <img width="96px" height="90px" src={GuLogo} alt="logo" />
+                    </Col>
+                </Row>
+                {
+                    user.success ?
+                        <Row className="sidepanel" >
+                            <div class="user-details">
+                                <Row className="user-img">
+                                    <Col xs={12} >
+                                        <img src={values.image} className="rounded-circle" alt="default" height="150" width="150" />
+                                    </Col>
+                                    <Col xs={12} style={{ paddingTop: '30px' }}>
+                                        <Modal isOpen={isOpen} toggle={toggleModal}>
+                                            <ModalHeader>Choose File:</ModalHeader>
+                                            <ModalBody>
+                                                <div className="form-group">
+                                                    <input className="form-control" type="file" id="formFile" onChange={handleFileChange} />
+                                                </div>
+                                            </ModalBody>
+                                            <ModalFooter>
+                                                <Button color="primary" onClick={handleUpload} size='sm' >
+                                                    Upload Files
+                                                </Button>
+                                                <Button onClick={toggle} size='sm' color="black">Cancel</Button>
+                                            </ModalFooter>
+                                        </Modal>
+                                        <Button size="sm" color="primary" onClick={toggleModal} style={{ borderRadius: '20px' }}>
+                                            Upload Image
+                                        </Button>
+                                    </Col>
+                                </Row>
+                                <Row className="user-info">
+                                    <Col xs={12} className="details">
+                                        Name: {user.user.name}
+                                    </Col>
+                                    <Col xs={12} className="details">
+                                        Email: {user.user.email}
+                                    </Col>
+                                    {
+                                        user.user.userType === STUDENT ?
                                             <>
                                                 <Col xs={12} className="details">
-                                                    Primary Subject: {user.user.subject}
+                                                    Section: {user.user.section}
                                                 </Col>
                                                 <Col xs={12} className="details">
-                                                    Highest Degree: {user.user.degree}
+                                                    Semester: {user.user.semester}
                                                 </Col>
                                                 <Col xs={12} className="details">
-                                                    Position : {user.user.position}
+                                                    Branch: {user.user.branch}
                                                 </Col>
                                             </> :
-                                            <>
-                                                <Col xs={12} className="details">
-                                                    Role: {user.user.role}
-                                                </Col>
-                                                <Col xs={12} className="details">
-                                                    Highest Degree: {user.user.degree}
-                                                </Col>
-                                            </>
+                                            user.user.userType === TEACHER ?
+                                                <>
+                                                    <Col xs={12} className="details">
+                                                        Primary Subject: {user.user.subject}
+                                                    </Col>
+                                                    <Col xs={12} className="details">
+                                                        Highest Degree: {user.user.degree}
+                                                    </Col>
+                                                    <Col xs={12} className="details">
+                                                        Position : {user.user.position}
+                                                    </Col>
+                                                </> :
+                                                <>
+                                                    <Col xs={12} className="details">
+                                                        Role: {user.user.role}
+                                                    </Col>
+                                                    <Col xs={12} className="details">
+                                                        Highest Degree: {user.user.degree}
+                                                    </Col>
+                                                </>
 
-                                }
-                                <Col xs={12} className="details" style={{ textAlign: 'center', color: 'red' }}>
-                                    Other info will be shown once user data is retrieved from college!
-                                </Col>
-                            </Row>
+                                    }
+                                    <Col xs={12} className="details" style={{ color: 'red' }}>
+                                        Other info will be shown once user data is retrieved from college!
+                                    </Col>
+                                </Row>
+                            </div>
+                            <NotificationContainer />
+                        </Row> :
+                        <div style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', height: '100vh' }}>
+                            <ReactLoading type={"spin"} color={"blue"} height={'50px'} width={'50px'} />
                         </div>
-                        <NotificationContainer />
-                    </Row> :
-                    <div style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', height: '100vh' }}>
-                        <ReactLoading type={"spin"} color={"blue"} height={'50px'} width={'50px'} />
-                    </div>
-            }
-        </Container>
+                }
+            </Container>
+        </>
     )
 }
 

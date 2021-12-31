@@ -9,6 +9,8 @@ import {
 import classNames from 'classnames';
 import React, { useState } from 'react';
 import { Button, Col, Container, Row } from 'reactstrap';
+import GuLogo from '../images/Galgotias_University.png'
+
 const ContactUsPage = ({ toggleSidebar, sideBarIsOpen }) => {
 
     const theme = useTheme()
@@ -26,124 +28,129 @@ const ContactUsPage = ({ toggleSidebar, sideBarIsOpen }) => {
         setPhoneNumber('')
     }
 
-
     return (
-        <Container
-            fluid
-            className={classNames("content", { "is-open": sideBarIsOpen })}
-        >
-            {
-                !sideBarIsOpen ?
-                    <Button color="gray" onClick={toggleSidebar} style={{ marginBottom: '10px', border: '1px solid black' }}>
-                        <FontAwesomeIcon icon={faAlignLeft} />
-                    </Button> :
-                    <div style={{ display: 'none' }}></div>
+        <>
+            <div className="vector"></div>
+            <Container
+                fluid
+                className={classNames("content", { "is-open": sideBarIsOpen })}
+            >
+                {
+                    !sideBarIsOpen ?
+                        <Button color="gray" onClick={toggleSidebar} style={{ marginBottom: '10px', border: '1px solid black' }}>
+                            <FontAwesomeIcon icon={faAlignLeft} />
+                        </Button> :
+                        <div style={{ display: 'none' }}></div>
 
-            }
-            <Row id='panel-header-row' style={{ height: '50px', margin: '0 0.5em', padding: '0 0.2em' }}>
-                <Col xs={12} style={{ alignSelf: 'center', fontFamily: 'Domine', fontSize: '18px' }}>
-                    Contact Us<FontAwesomeIcon icon={faChevronRight} style={{ marginLeft: '5px' }} />
-                </Col>
-            </Row>
-            <Row>
-                <MContainer component="main" maxWidth="xs">
-                    <CssBaseline />
-                    <Box
-                        sx={{
-                            marginTop: 8,
-                            display: 'flex',
-                            flexDirection: 'column',
-                            alignItems: 'center',
-                        }}
-                    >
-                        <Card
+                }
+                <Row id='panel-header-row' style={{ height: '50px', margin: '0 0.5em', padding: '0 0.2em', marginBottom: '3em' }}>
+                    <Col xs={12} md={6} style={{ alignSelf: 'center', fontFamily: 'Domine', fontSize: '18px', color: '#7EACF8' }}>
+                        Contact Us<FontAwesomeIcon icon={faChevronRight} style={{ marginLeft: '5px' }} />
+                    </Col>
+                    <Col xs={12} md={6} style={{ textAlign: 'end' }}>
+                        <img width="96px" height="90px" src={GuLogo} alt="logo" />
+                    </Col>
+                </Row>
+                <Row>
+                    <MContainer component="main" maxWidth="xs">
+                        <CssBaseline />
+                        <Box
                             sx={{
+                                marginTop: 8,
                                 display: 'flex',
                                 flexDirection: 'column',
                                 alignItems: 'center',
-                                justifyContent: 'center',
-                                borderRadius: '12px',
-                                [theme.breakpoints.up('md')]: {
-                                    width: '600px',
-                                    p: 6,
-                                },
-                                [theme.breakpoints.down('md')]: {
-                                    width: '450px',
-                                    p: 2,
-                                },
                             }}
                         >
-                            <Avatar sx={{ m: 1, bgcolor: 'secondary.main' }}>
-                                <MailOutline />
-                            </Avatar>
-                            <Typography component="h1" variant="h5" sx={{ mb: 5 }}>
-                                Contact Us
-                            </Typography>
-                            <Grid container spacing={2}>
-                                <Grid sx={{
+                            <Card
+                                sx={{
+                                    display: 'flex',
+                                    flexDirection: 'column',
+                                    alignItems: 'center',
+                                    justifyContent: 'center',
+                                    borderRadius: '12px',
                                     [theme.breakpoints.up('md')]: {
-                                        pr: 1.3,
+                                        width: '600px',
+                                        p: 6,
+                                    },
+                                    [theme.breakpoints.down('md')]: {
+                                        width: '450px',
+                                        p: 2,
                                     },
                                 }}
-                                    item
-                                    xs={12}
-                                    md={6}>
-                                    <TextField
-                                        sx={{ mb: 3 }}
-                                        id="outlined-name"
-                                        label="Full Name"
-                                        required
-                                        value={name}
-                                        InputProps={{
-                                            startAdornment: <InputAdornment position='start'>
-                                                <Person />
-                                            </InputAdornment>
-                                        }}
-                                    />
-                                    <TextField
-                                        id="outlined-name"
-                                        label="Email"
-                                        required
-                                        value={name}
-                                        InputProps={{
-                                            startAdornment: <InputAdornment position='start'>
-                                                < Mail />
-                                            </InputAdornment>
-                                        }}
-                                    />
-                                </Grid>
-
-                                <Grid sx={{
-                                    [theme.breakpoints.up('md')]: {
-                                        pr: 1.3,
-                                    },
-                                }}
-                                    item
-                                    xs={12}
-                                    md={6}>
-                                    <TextField
-                                        id="outlined-name"
-                                        label="Query"
-                                        required
-                                        multiline
-                                        minRows={5}
-                                        value={name}
-                                    />
-                                </Grid>
-                            </Grid>
-                            <Button
-                                color="primary"
-                                style={{ margin: '10px' }}
-                                size='large'
-                                onClick={submitHandler}
                             >
-                                Send Message
-                            </Button>
-                        </Card>
-                    </Box>
-                </MContainer>
-            </Row>
-        </Container>
+                                <Avatar sx={{ m: 1, bgcolor: 'secondary.main' }}>
+                                    <MailOutline />
+                                </Avatar>
+                                <Typography component="h1" variant="h5" sx={{ mb: 5 }}>
+                                    Contact Us
+                                </Typography>
+                                <Grid container spacing={2}>
+                                    <Grid sx={{
+                                        [theme.breakpoints.up('md')]: {
+                                            pr: 1.3,
+                                        },
+                                    }}
+                                        item
+                                        xs={12}
+                                        md={6}>
+                                        <TextField
+                                            sx={{ mb: 3 }}
+                                            id="outlined-name"
+                                            label="Full Name"
+                                            required
+                                            value={name}
+                                            InputProps={{
+                                                startAdornment: <InputAdornment position='start'>
+                                                    <Person />
+                                                </InputAdornment>
+                                            }}
+                                        />
+                                        <TextField
+                                            id="outlined-name"
+                                            label="Email"
+                                            required
+                                            value={name}
+                                            InputProps={{
+                                                startAdornment: <InputAdornment position='start'>
+                                                    < Mail />
+                                                </InputAdornment>
+                                            }}
+                                        />
+                                    </Grid>
+
+                                    <Grid sx={{
+                                        [theme.breakpoints.up('md')]: {
+                                            pr: 1.3,
+                                        },
+                                    }}
+                                        item
+                                        xs={12}
+                                        md={6}>
+                                        <TextField
+                                            id="outlined-name"
+                                            label="Query"
+                                            required
+                                            multiline
+                                            minRows={5}
+                                            value={name}
+                                        />
+                                    </Grid>
+                                </Grid>
+                                <Button
+                                    color="primary"
+                                    style={{ margin: '10px' }}
+                                    size='large'
+                                    onClick={submitHandler}
+                                >
+                                    Send Message
+                                </Button>
+                            </Card>
+                        </Box>
+                    </MContainer>
+                </Row>
+            </Container>
+        </>
     )
 }
 

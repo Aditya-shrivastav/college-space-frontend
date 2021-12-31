@@ -6,6 +6,7 @@ import React, { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
 import { Button, Col, Container, Modal, ModalBody, ModalHeader, Row } from 'reactstrap';
 import { baseUrl } from '../shared/constants';
+import GuLogo from '../images/Galgotias_University.png'
 
 const MessagesPage = ({ toggleSidebar, sideBarIsOpen }) => {
 
@@ -81,45 +82,51 @@ const MessagesPage = ({ toggleSidebar, sideBarIsOpen }) => {
         )
     })
     return (
-        <Container fluid className={classNames("content", { "is-open": sideBarIsOpen })}
-        >
-            {
-                !sideBarIsOpen ?
-                    <Button color="gray" onClick={toggleSidebar} style={{ marginBottom: '10px', border: '1px solid black' }}>
-                        <FontAwesomeIcon icon={faAlignLeft} />
-                    </Button> :
-                    <div style={{ display: 'none' }}></div>
+        <>
+            <div className="vector"></div>
+            <Container fluid className={classNames("content", { "is-open": sideBarIsOpen })}
+            >
+                {
+                    !sideBarIsOpen ?
+                        <Button color="gray" onClick={toggleSidebar} style={{ marginBottom: '10px', border: '1px solid black' }}>
+                            <FontAwesomeIcon icon={faAlignLeft} />
+                        </Button> :
+                        <div style={{ display: 'none' }}></div>
 
-            }
-            <Row id='panel-header-row' style={{ height: '50px', margin: '0 0.5em', padding: '0 0.2em' }}>
-                <Col xs={12} style={{ alignSelf: 'center', fontFamily: 'Domine', fontSize: '18px' }}>
-                    Messages<FontAwesomeIcon icon={faChevronRight} style={{ marginLeft: '5px' }} />
-                </Col>
-            </Row>
-            <Row style={{ margin: '10px', marginBottom: '0' }}>
-                <Col xs={12}>
-                    <Modal isOpen={isOpen} toggle={toggle}>
-                        <ModalHeader>Find Faculty <FontAwesomeIcon icon={faSearch} style={{ marginLeft: '10px' }} /></ModalHeader>
-                        <ModalBody>
-                            <Col md="12">
-                                <input className="form-control" type="text" placeholder="Search" aria-label="Search" onChange={handleChange} />
-                            </Col>
-                            <Row style={{ marginTop: '10px', marginLeft: '0.5em' }}>
-                                {searched.length > 0 ? showSearchResult : <div></div>}
-                            </Row>
-                        </ModalBody>
-                    </Modal>
-                </Col>
-            </Row>
-            <Row style={{ margin: '0.5em 0.5em' }}>
-                <Col md="3" xs="6" style={{ marginLeft: 'auto' }}>
-                    <Button color='blue' style={{ border: '1px solid black' }} onClick={toggle}>Search<FontAwesomeIcon icon={faSearch} style={{ marginLeft: '10px' }} /></Button>
-                </Col>
-            </Row>
-            <Row>
-                {chats.length > 0 ? showChatList : <div></div>}
-            </Row>
-        </Container>
+                }
+                <Row id='panel-header-row' style={{ height: '50px', margin: '0 0.5em', padding: '0 0.2em', marginBottom: '3em' }}>
+                    <Col xs={12} md={6} style={{ alignSelf: 'center', fontFamily: 'Domine', fontSize: '18px', color: '#7EACF8' }}>
+                        Messages<FontAwesomeIcon icon={faChevronRight} style={{ marginLeft: '5px' }} />
+                    </Col>
+                    <Col xs={12} md={6} style={{ textAlign: 'end' }}>
+                        <img width="96px" height="90px" src={GuLogo} alt="logo" />
+                    </Col>
+                </Row>
+                <Row style={{ margin: '10px', marginBottom: '0' }}>
+                    <Col xs={12}>
+                        <Modal isOpen={isOpen} toggle={toggle}>
+                            <ModalHeader>Find Faculty <FontAwesomeIcon icon={faSearch} style={{ marginLeft: '10px' }} /></ModalHeader>
+                            <ModalBody>
+                                <Col md="12">
+                                    <input className="form-control" type="text" placeholder="Search" aria-label="Search" onChange={handleChange} />
+                                </Col>
+                                <Row style={{ marginTop: '10px', marginLeft: '0.5em' }}>
+                                    {searched.length > 0 ? showSearchResult : <div></div>}
+                                </Row>
+                            </ModalBody>
+                        </Modal>
+                    </Col>
+                </Row>
+                <Row style={{ margin: '0.5em 0.5em' }}>
+                    <Col md="3" xs="6" style={{ marginLeft: 'auto' }}>
+                        <Button color='blue' style={{ border: '1px solid black' }} onClick={toggle}>Search<FontAwesomeIcon icon={faSearch} style={{ marginLeft: '10px' }} /></Button>
+                    </Col>
+                </Row>
+                <Row>
+                    {chats.length > 0 ? showChatList : <div></div>}
+                </Row>
+            </Container>
+        </>
     )
 }
 
