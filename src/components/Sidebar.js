@@ -119,12 +119,12 @@ const SideBar = ({ isOpen, toggle = () => { }, logout = () => { }, attendance = 
                                         Messages
                                     </NavLink>
                                 </NavItem>
-                                <NavItem>
+                                {/* <NavItem>
                                     <NavLink tag={Link} to={"/contactUs"} activeClassName="sidebar-active-tab">
                                         <FontAwesomeIcon icon={faPaperPlane} style={{ marginRight: '10px' }} />
                                         Contact Us
                                     </NavLink>
-                                </NavItem>
+                                </NavItem> */}
                             </> :
                             localStorage.getItem('user') === TEACHER ?
                                 <>
@@ -146,12 +146,12 @@ const SideBar = ({ isOpen, toggle = () => { }, logout = () => { }, attendance = 
                                             Messages
                                         </NavLink>
                                     </NavItem>
-                                    <NavItem>
+                                    {/* <NavItem>
                                         <NavLink tag={Link} to={"/contactUs"} activeClassName="sidebar-active-tab">
                                             <FontAwesomeIcon icon={faPaperPlane} style={{ marginRight: '10px' }} />
                                             Contact Us
                                         </NavLink>
-                                    </NavItem>
+                                    </NavItem> */}
                                 </> :
                                 localStorage.getItem('user') === ADMIN ?
                                     <>
