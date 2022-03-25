@@ -1,14 +1,14 @@
-import React, { useEffect, useState } from 'react';
-import classNames from 'classnames';
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faAlignLeft, faChevronRight } from '@fortawesome/free-solid-svg-icons';
-import { Container, Button, Row, Col, CardText, CardBody, Card, CardHeader, CardImg, CardFooter } from 'reactstrap';
-import ReactLoading from 'react-loading';
-import { onSnapshot, doc, getFirestore, query, collection, orderBy } from 'firebase/firestore';
-import app from '../../firebaseConfig';
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import axios from "axios";
-import { baseUrl } from '../../shared/constants';
+import classNames from 'classnames';
+import { collection, getFirestore, onSnapshot, orderBy, query } from 'firebase/firestore';
+import React, { useEffect, useState } from 'react';
+import ReactLoading from 'react-loading';
+import { Button, Col, Container, Row } from 'reactstrap';
+import app from '../../firebaseConfig';
 import GuLogo from '../../images/Galgotias_University.png';
+import { baseUrl } from '../../shared/constants';
 const db = getFirestore(app);
 const q = query(collection(db, "events"), orderBy("time", "desc"));
 
@@ -34,11 +34,10 @@ const EventCard = ({ event }) => {
     )
 }
 
-{/* {event.imageUrl ? <CardImg top src={event.imageUrl} alt={event.title} height="400px" style={{ padding: '10px', borderRadius: '1em' }} /> : <div></div>} */ }
-
 const EventsPage = ({ toggleSidebar, sideBarIsOpen, student }) => {
 
     const [events, setEvents] = useState([])
+    const [noEvent, setEventStatus] = useState(false)
 
     const markEventRead = () => {
         axios(`${baseUrl}/students/markEventRead`, {
@@ -66,14 +65,17 @@ const EventsPage = ({ toggleSidebar, sideBarIsOpen, student }) => {
                 console.log(event.data())
                 resp.push(event.data());
             })
-            setEvents(resp);
+            if (resp.length > 0)
+                setEvents(resp);
+            else
+                setEventStatus(true)
         })
     }, [])
 
     const renderEvents = events.map((event) => {
         return (
             <Row style={{ justifyContent: 'center', margin: 0, padding: 0 }}>
-                <Col xs={12} md={5} key={event.eventId}>
+                <Col className='event-col' xs={12} md={8} lg={5} key={event.eventId}>
                     <EventCard event={event} />
                 </Col>
             </Row>
@@ -94,10 +96,10 @@ const EventsPage = ({ toggleSidebar, sideBarIsOpen, student }) => {
 
                 }
                 <Row id='panel-header-row' style={{ height: '50px', margin: '0 0.5em', padding: '0 0.2em', marginBottom: '3em' }}>
-                    <Col xs={12} md={6} style={{ alignSelf: 'center', fontFamily: 'Domine', fontSize: '18px', color: '#7EACF8' }}>
+                    <Col xs={6} style={{ alignSelf: 'center', fontFamily: 'Domine', fontSize: '18px', color: '#7EACF8' }}>
                         Events<FontAwesomeIcon icon={faChevronRight} style={{ marginLeft: '5px' }} />
                     </Col>
-                    <Col xs={12} md={6} style={{ textAlign: 'end' }}>
+                    <Col className="gu-logo-page" xs={6} style={{ textAlign: 'end' }}>
                         <img width="96px" height="90px" src={GuLogo} alt="logo" />
                     </Col>
                 </Row>
@@ -107,9 +109,14 @@ const EventsPage = ({ toggleSidebar, sideBarIsOpen, student }) => {
                             <Row id="event-rows">{renderEvents}</Row>
                         </div>
                         :
-                        <div style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', height: '100vh' }}>
-                            <ReactLoading type={"spin"} color={"blue"} height={'50px'} width={'50px'} />
-                        </div>
+                        noEvent ?
+                            <div style={{ margin: '1em', fontWeight: 'bold' }}>
+                                'No Events Currently Going On!'
+                            </div>
+                            :
+                            <div style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', height: '100vh' }}>
+                                <ReactLoading type={"spin"} color={"blue"} height={'50px'} width={'50px'} />
+                            </div>
                 }
             </Container>
         </>

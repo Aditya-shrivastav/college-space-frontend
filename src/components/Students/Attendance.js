@@ -27,7 +27,7 @@ const AttendancePage = ({ toggleSidebar, sideBarIsOpen, student }) => {
 
     const attendance = student.attendance.map((subject) => {
         return (
-            <Col xs={12} md={3} key={subject.name}>
+            <Col xs={12} md={4} lg={3} key={subject.name}>
                 <AttendanceCard subject={subject} />
             </Col>
         )
@@ -47,10 +47,10 @@ const AttendancePage = ({ toggleSidebar, sideBarIsOpen, student }) => {
 
                 }
                 <Row id='panel-header-row' style={{ height: '50px', margin: '0 0.5em', padding: '0 0.2em', marginBottom: '3em' }}>
-                    <Col xs={12} md={6} style={{ alignSelf: 'center', fontFamily: 'Domine', fontSize: '18px', color: '#7EACF8' }}>
+                    <Col xs={6} md={6} style={{ alignSelf: 'center', fontFamily: 'Domine', fontSize: '18px', color: '#7EACF8' }}>
                         Attendance<FontAwesomeIcon icon={faChevronRight} style={{ marginLeft: '5px' }} />
                     </Col>
-                    <Col xs={12} md={6} style={{ textAlign: 'end' }}>
+                    <Col className="gu-logo-page" xs={6} md={6} style={{ textAlign: 'end' }}>
                         <img width="96px" height="90px" src={GuLogo} alt="logo" />
                     </Col>
                 </Row>
@@ -60,9 +60,14 @@ const AttendancePage = ({ toggleSidebar, sideBarIsOpen, student }) => {
                             <Row style={{ margin: '2em' }}>{attendance}</Row>
                         </div>
                         :
-                        <div style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', height: '100vh' }}>
-                            <ReactLoading type={"spin"} color={"blue"} height={'50px'} width={'50px'} />
-                        </div>
+                        student.attendanceErr ?
+                            <div style={{ margin: '1em', fontWeight: 'bold' }}>
+                                {student.attendanceErr}
+                            </div>
+                            :
+                            <div style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', height: '100vh' }}>
+                                <ReactLoading type={"spin"} color={"blue"} height={'50px'} width={'50px'} />
+                            </div>
                 }
 
             </Container>

@@ -21,10 +21,10 @@ const OthersPage = ({ toggleSidebar, sideBarIsOpen }) => {
 
                 }
                 <Row id='panel-header-row' style={{ height: '50px', margin: '0 0.5em', padding: '0 0.2em', marginBottom: '3em' }}>
-                    <Col xs={12} md={6} style={{ alignSelf: 'center', fontFamily: 'Domine', fontSize: '18px', color: '#7EACF8' }}>
+                    <Col xs={6} style={{ alignSelf: 'center', fontFamily: 'Domine', fontSize: '18px', color: '#7EACF8' }}>
                         Others<FontAwesomeIcon icon={faChevronRight} style={{ marginLeft: '5px' }} />
                     </Col>
-                    <Col xs={12} md={6} style={{ textAlign: 'end' }}>
+                    <Col className="gu-logo-page" xs={6} style={{ textAlign: 'end' }}>
                         <img width="96px" height="90px" src={GuLogo} alt="logo" />
                     </Col>
                 </Row>

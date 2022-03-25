@@ -32,31 +32,31 @@ export const loginUser = (creds) => (dispatch) => {
         },
         data: JSON.stringify(creds)
     }).then((response) => {
-
+        console.log(response)
         if (response.status === 200) {
             return response.data;
         }
         else {
-            var err = new Error('Error ' + response.data.status + ': ' + response.data.message)
-            err.response = response;
+            var err = response.data;
             throw err;
         }
     }).then((response) => {
 
         if (response.token) {
+            console.log('hjere')
             localStorage.setItem('token', response.token)
             localStorage.setItem('userId', response.userId)
             dispatch(loginSuccess(response))
 
         } else {
-            var err = new Error('Error ' + response.status + ': ' + response.statusText)
-            err.response = response;
+            var err = response;
             throw err;
         }
         return response;
     }).catch((err) => {
-        dispatch(loginError(err?.response?.data.message))
-        return { success: false, err: err?.response?.data?.message }
+        console.log(err)
+        dispatch(loginError(err?.message))
+        return { success: false, err: err?.message }
     })
 }
 
@@ -76,35 +76,36 @@ export const signupError = (err) => {
 }
 
 export const signupUser = (creds) => (dispatch) => {
-    return axios('http://localhost:5000/users/signup', {
-        method: 'POST',
-        headers: {
-            'Content-Type': 'application/json'
-        },
-        data: JSON.stringify(creds)
-    }).then((response) => {
-        if (response.status === 200) {
-            return response.data;
-        } else {
-            var err = new Error('Error ' + response.status + ': ' + response.statusText)
-            err.response = response;
-            throw err;
-        }
-    }).then((response) => {
-        if (response.success) {
+    return { message: 'Nothing happened' };
+    // return axios('http://localhost:5000/users/signup', {
+    //     method: 'POST',
+    //     headers: {
+    //         'Content-Type': 'application/json'
+    //     },
+    //     data: JSON.stringify(creds)
+    // }).then((response) => {
+    //     if (response.status === 200) {
+    //         return response.data;
+    //     } else {
+    //         var err = new Error('Error ' + response.status + ': ' + response.statusText)
+    //         err.response = response;
+    //         throw err;
+    //     }
+    // }).then((response) => {
+    //     if (response.success) {
 
-            dispatch(signupSuccess());
-            return response;
+    //         dispatch(signupSuccess());
+    //         return response;
 
-        } else {
-            var err = new Error('Error ' + response.status + ': ' + response.statusText)
-            err.response = response;
-            throw err;
-        }
-    }).catch((err) => {
-        dispatch(signupError(err?.response?.data?.message))
-        return { success: false, err: err?.response?.data?.message }
-    })
+    //     } else {
+    //         var err = new Error('Error ' + response.status + ': ' + response.statusText)
+    //         err.response = response;
+    //         throw err;
+    //     }
+    // }).catch((err) => {
+    //     dispatch(signupError(err?.response?.data?.message))
+    //     return { success: false, err: err?.response?.data?.message }
+    // })
 }
 
 export const getUserSuccess = (creds) => {
@@ -138,8 +139,7 @@ export const getUser = () => (dispatch) => {
         if (response.status === 200) {
             return response.data;
         } else {
-            var err = new Error('Error ' + response.status + ': ' + response.statusText);
-            err.response = response;
+            var err = `Error: ${response.status} ${response.statusText}`;
             throw err;
         }
     }).then((response) => {
@@ -148,13 +148,12 @@ export const getUser = () => (dispatch) => {
             dispatch(getUserSuccess(response.user));
             return response;
         } else {
-            var err = new Error('Error ' + response.status + ': ' + response.statusText);
-            err.response = response;
+            var err = response.message
             throw err;
         }
     }).catch((err) => {
-        dispatch(getUserFailed({ err: err?.response?.data?.message }))
-        return { success: false, err: err?.response?.data?.message }
+        dispatch(getUserFailed({ err: err }))
+        return { success: false, err: err }
     })
 }
 
@@ -179,6 +178,15 @@ export const fetchAttendaceSuccess = (creds) => {
     }
 }
 
+export const fetchAttendaceFailure = (creds) => {
+    return {
+        type: actionTypes.FETCH_ATTENDANCE_FAILURE,
+        payload: {
+            creds
+        }
+    }
+}
+
 
 export const fetchAttendace = () => (dispatch) => {
 
@@ -188,14 +196,30 @@ export const fetchAttendace = () => (dispatch) => {
             'x-auth-token': localStorage.getItem('token')
         }
     }).then((resp) => {
-        console.log(resp.data.attendance)
-        dispatch(fetchAttendaceSuccess(resp.data.attendance))
+
+        if (resp.data.success)
+            dispatch(fetchAttendaceSuccess(resp.data.attendance))
+        else {
+            var err = resp.data.message
+            throw err;
+        }
+    }).catch((err) => {
+        dispatch(fetchAttendaceFailure(err))
     })
 }
 
 export const fetchCoursesOfFacultySuccess = (creds) => {
     return {
         type: actionTypes.FETCH_FACULTY_COURSE_SUCCESS,
+        payload: {
+            creds
+        }
+    }
+}
+
+export const fetchCoursesOfFacultyFailure = (creds) => {
+    return {
+        type: actionTypes.FETCH_FACULTY_COURSE_FAILED,
         payload: {
             creds
         }
@@ -209,13 +233,29 @@ export const fetchCoursesOfFaculty = () => (dispatch) => {
             'x-auth-token': localStorage.getItem('token')
         }
     }).then((resp) => {
-        dispatch(fetchCoursesOfFacultySuccess(resp.data.courses))
+        if (resp.data.success)
+            dispatch(fetchCoursesOfFacultySuccess(resp.data.courses))
+        else {
+            var err = resp.data.message
+            throw err
+        }
+    }).catch((err) => {
+        dispatch(fetchCoursesOfFacultyFailure(err))
     })
 }
 
 export const fetchStudentCoursesSuccess = (creds) => {
     return {
         type: actionTypes.FETCH_STUDENT_COURSE_SUCCESS,
+        payload: {
+            creds
+        }
+    }
+}
+
+export const fetchStudentCoursesFailure = (creds) => {
+    return {
+        type: actionTypes.FETCH_STUDENT_COURSE_FAILED,
         payload: {
             creds
         }
@@ -229,19 +269,35 @@ export const fetchStudentCourses = () => (dispatch) => {
             'x-auth-token': localStorage.getItem('token')
         }
     }).then((resp) => {
-        dispatch(fetchStudentCoursesSuccess(resp.data.courses))
+        if (resp.data.success)
+            dispatch(fetchStudentCoursesSuccess(resp.data.courses))
+        else {
+            var err = resp.data.message
+            throw err
+        }
+    }).catch((err) => {
+        dispatch(fetchStudentCoursesFailure(err))
     })
 }
 
 export const fetchStudentTimeTableSuccess = (creds) => {
     return {
-        type: actionTypes.FETCH_STUDENT_TIME_TABLE,
+        type: actionTypes.FETCH_STUDENT_TIME_TABLE_SUCCESS,
         payload: {
             creds
         }
     }
 }
 
+export const fetchStudentTimeTableFailure = (creds) => {
+    console.log('her')
+    return {
+        type: actionTypes.FETCH_STUDENT_TIME_TABLE_FAILURE,
+        payload: {
+            creds
+        }
+    }
+}
 
 export const fetchStudentTimeTable = () => (dispatch) => {
     return axios(`${baseUrl}/students/getTimeTable`, {
@@ -250,7 +306,14 @@ export const fetchStudentTimeTable = () => (dispatch) => {
             'x-auth-token': localStorage.getItem('token')
         }
     }).then((resp) => {
-        dispatch(fetchStudentTimeTableSuccess(resp.data.timeTable))
+        if (resp.data.success)
+            dispatch(fetchStudentTimeTableSuccess(resp.data.timeTable))
+        else {
+            var err = resp.data.message
+            throw err
+        }
+    }).catch((err) => {
+        dispatch(fetchStudentTimeTableFailure(err))
     })
 }
 

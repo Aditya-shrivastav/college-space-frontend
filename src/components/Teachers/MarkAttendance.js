@@ -11,19 +11,19 @@ import GuLogo from '../../images/Galgotias_University.png'
 
 const MarkAttendancePage = ({ toggleSidebar, sideBarIsOpen, course }) => {
 
-    const [values, setValue] = useState({ section: null, date: null, totalStudents: [], presentStudents: [] })
+    const [values, setValue] = useState({ section: null, date: null, totalStudents: [], presentStudents: [], fetchStudentErr: null })
 
     const handleChange = (field) => (event) => {
         console.log(field)
         setValue({ ...values, [field]: event.target.value });
     }
 
-    const handleSubmit = async (event) => {
+    const handleSubmit = (event) => {
         event.preventDefault();
 
         let currentDate = new Date();
 
-        let selectedDate = new Date(values.date);
+        let selectedDate = new Date(`${values.date} 00:00:00`);
 
         if (selectedDate.getDay() === 0) {
             NotificationManager.error('Cannot mark attendance for Sunday!');
@@ -39,7 +39,7 @@ const MarkAttendancePage = ({ toggleSidebar, sideBarIsOpen, course }) => {
             NotificationManager.error('Please specify both fields')
             return;
         }
-        const students = await axios(`${baseUrl}/students/getStudentsFromCourse`, {
+        axios(`${baseUrl}/students/getStudentsFromCourse`, {
             method: "GET",
             headers: {
                 "x-auth-token": localStorage.getItem('token')
@@ -50,11 +50,12 @@ const MarkAttendancePage = ({ toggleSidebar, sideBarIsOpen, course }) => {
                 semester: parseInt(course.semester)
             }
         }).then((resp) => {
-            console.log(resp.data)
-            return resp.data;
+            if (resp.data.success)
+                setValue({ ...values, totalStudents: resp.data.students });
+            else
+                setValue({ ...values, fetchStudentErr: resp.data.message });
         })
-        if (students.message === 'success')
-            setValue({ ...values, totalStudents: students.students })
+
     }
 
     const submitAttendance = (e) => {
@@ -75,8 +76,11 @@ const MarkAttendancePage = ({ toggleSidebar, sideBarIsOpen, course }) => {
             }
         }).then((resp) => {
 
-            if (resp.data.message === 'success')
+            if (resp.data.success)
                 NotificationManager.info('Attendance submitted');
+            else
+                NotificationManager.error(resp.data.message);
+
             setValue({ section: null, date: null, totalStudents: [], presentStudents: [] })
             frm.reset()
         })
@@ -111,10 +115,10 @@ const MarkAttendancePage = ({ toggleSidebar, sideBarIsOpen, course }) => {
 
                 }
                 <Row id='panel-header-row' style={{ height: '50px', margin: '0 0.5em', padding: '0 0.2em', marginBottom: '3em' }}>
-                    <Col xs={12} md={6} style={{ alignSelf: 'center', fontFamily: 'Domine', fontSize: '18px', color: '#7EACF8' }}>
+                    <Col xs={6} style={{ alignSelf: 'center', fontFamily: 'Domine', fontSize: '18px', color: '#7EACF8' }}>
                         Mark Attendance<FontAwesomeIcon icon={faChevronRight} style={{ marginLeft: '5px' }} />
                     </Col>
-                    <Col xs={12} md={6} style={{ textAlign: 'end' }}>
+                    <Col className="gu-logo-page" xs={6} style={{ textAlign: 'end' }}>
                         <img width="96px" height="90px" src={GuLogo} alt="logo" />
                     </Col>
                 </Row>
@@ -177,7 +181,12 @@ const MarkAttendancePage = ({ toggleSidebar, sideBarIsOpen, course }) => {
                                             </Row>
                                         </Form>
                                     </Row> :
-                                    <div></div>
+                                    values.fetchStudentErr ?
+                                        <div style={{ margin: '1em', fontWeight: 'bold' }}>
+                                            {values.fetchStudentErr}
+                                        </div>
+                                        :
+                                        <div></div>
                             }
                             <NotificationContainer />
                         </> :

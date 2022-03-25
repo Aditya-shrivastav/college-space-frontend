@@ -14,12 +14,13 @@ import { Button, Col, Container, Modal, ModalBody, ModalFooter, ModalHeader, Row
 import app from '../firebaseConfig';
 import { baseUrl, TEACHER } from '../shared/constants';
 import GuLogo from '../images/Galgotias_University.png'
+import ReactLoading from 'react-loading';
 
 const storage = getStorage(app);
 
 const CourseFilesPage = ({ toggleSidebar, sideBarIsOpen, course }) => {
 
-    const [values, setValue] = useState({ file: null, courseFiles: [], filename: null })
+    const [values, setValue] = useState({ file: null, courseFiles: [], filename: null, fetchCourseErr: null })
     const [isOpen, toggleModal] = useState(false);
 
 
@@ -40,8 +41,10 @@ const CourseFilesPage = ({ toggleSidebar, sideBarIsOpen, course }) => {
                 semester: course.semester
             }
         }).then((resp) => {
-            console.log(resp.data)
-            setValue({ ...values, courseFiles: resp.data.courseFiles });
+            if (resp.data.success)
+                setValue({ ...values, courseFiles: resp.data.courseFiles });
+            else
+                setValue({ ...values, fetchCourseErr: resp.data.message })
         })
     }
 
@@ -107,7 +110,7 @@ const CourseFilesPage = ({ toggleSidebar, sideBarIsOpen, course }) => {
                             name: values.filename
                         }
                     }).then((resp) => {
-                        if (resp.data.message === 'success') {
+                        if (resp.data.success) {
                             NotificationManager.info('File uploaded Successfully!');
                             getCourseFiles();
                         } else {
@@ -147,10 +150,10 @@ const CourseFilesPage = ({ toggleSidebar, sideBarIsOpen, course }) => {
 
                 }
                 <Row id='panel-header-row' style={{ height: '50px', margin: '0 0.5em', padding: '0 0.2em', marginBottom: '3em' }}>
-                    <Col xs={12} md={6} style={{ alignSelf: 'center', fontFamily: 'Domine', fontSize: '18px', color: '#7EACF8' }}>
+                    <Col xs={6} style={{ alignSelf: 'center', fontFamily: 'Domine', fontSize: '18px', color: '#7EACF8' }}>
                         {course ? course.name : 'Course'}<FontAwesomeIcon icon={faChevronRight} style={{ marginLeft: '5px' }} />
                     </Col>
-                    <Col xs={12} md={6} style={{ textAlign: 'end' }}>
+                    <Col className="gu-logo-page" xs={6} style={{ textAlign: 'end' }}>
                         <img width="96px" height="90px" src={GuLogo} alt="logo" />
                     </Col>
                 </Row>
@@ -234,7 +237,14 @@ const CourseFilesPage = ({ toggleSidebar, sideBarIsOpen, course }) => {
                             </Row>
                         </div>
                         :
-                        <div></div>
+                        values.fetchCourseErr ?
+                            <div style={{ margin: '1em', fontWeight: 'bold' }}>
+                                {values.fetchCourseErr}
+                            </div>
+                            :
+                            <div style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', height: '100vh' }}>
+                                <ReactLoading type={"spin"} color={"blue"} height={'50px'} width={'50px'} />
+                            </div>
                 }
 
                 <NotificationContainer />

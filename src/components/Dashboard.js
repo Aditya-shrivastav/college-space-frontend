@@ -40,7 +40,7 @@ const DashboardPage = ({ toggleSidebar, sideBarIsOpen, user }) => {
 
         toggleModal();
 
-        const storageRef = ref(storage, `user/images/${values.file.name}`);
+        const storageRef = ref(storage, `user/images/${user.user.userId}/${values.file.name}`);
 
         const uploadTask = uploadBytesResumable(storageRef, values.file);
 
@@ -75,8 +75,10 @@ const DashboardPage = ({ toggleSidebar, sideBarIsOpen, user }) => {
                         },
                         data: { url }
                     }).then((res) => {
-                        if (res.data.message === 'success')
+                        if (res.data.message === 'success') {
+                            NotificationManager.success('Profile Updated Succesfully!');
                             setValue({ ...values, image: url });
+                        }
                     })
                     return url;
                 })
@@ -104,10 +106,10 @@ const DashboardPage = ({ toggleSidebar, sideBarIsOpen, user }) => {
 
                 }
                 <Row id='panel-header-row' style={{ height: '50px', margin: '0 0.5em', padding: '0 0.2em', marginBottom: '3em' }}>
-                    <Col xs={12} md={6} style={{ alignSelf: 'center', fontFamily: 'Domine', fontSize: '18px', color: '#7EACF8' }}>
+                    <Col xs={6} md={6} style={{ alignSelf: 'center', fontFamily: 'Domine', fontSize: '18px', color: '#7EACF8' }}>
                         Dashboard<FontAwesomeIcon icon={faChevronRight} style={{ marginLeft: '5px' }} />
                     </Col>
-                    <Col xs={12} md={6} style={{ textAlign: 'end' }}>
+                    <Col className="gu-logo-page" xs={6} md={6} style={{ textAlign: 'end' }}>
                         <img width="96px" height="90px" src={GuLogo} alt="logo" />
                     </Col>
                 </Row>
@@ -124,14 +126,14 @@ const DashboardPage = ({ toggleSidebar, sideBarIsOpen, user }) => {
                                             <ModalHeader>Choose File:</ModalHeader>
                                             <ModalBody>
                                                 <div className="form-group">
-                                                    <input className="form-control" type="file" id="formFile" onChange={handleFileChange} />
+                                                    <input className="form-control" type="file" id="formFile" onChange={handleFileChange} accept="image/*" />
                                                 </div>
                                             </ModalBody>
                                             <ModalFooter>
                                                 <Button color="primary" onClick={handleUpload} size='sm' >
                                                     Upload Files
                                                 </Button>
-                                                <Button onClick={toggle} size='sm' color="black">Cancel</Button>
+                                                <Button onClick={toggleModal} size='sm' color="black">Cancel</Button>
                                             </ModalFooter>
                                         </Modal>
                                         <Button size="sm" color="primary" onClick={toggleModal} style={{ borderRadius: '20px' }}>
@@ -181,7 +183,7 @@ const DashboardPage = ({ toggleSidebar, sideBarIsOpen, user }) => {
                                                 </>
 
                                     }
-                                    <Col xs={12} className="details" style={{ color: 'red' }}>
+                                    <Col xs={12} className="details" style={{ color: 'red', textAlign: 'center' }}>
                                         Other info will be shown once user data is retrieved from college!
                                     </Col>
                                 </Row>

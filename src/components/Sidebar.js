@@ -9,9 +9,9 @@ import ReactLoading from 'react-loading';
 import { NavLink as Link } from "react-router-dom";
 import { Nav, NavItem, NavLink } from "reactstrap";
 import app from '../firebaseConfig';
+import graduationHat from '../images/graduation-hat.png';
 import { ADMIN, STUDENT, TEACHER } from "../shared/constants";
 import history from "../shared/history";
-import graduationHat from '../images/graduation-hat.png'
 
 const db = getFirestore(app);
 
@@ -45,10 +45,10 @@ const SideBar = ({ isOpen, toggle = () => { }, logout = () => { }, attendance = 
         <div className={classNames("sidebar", { "is-open": isOpen })}>
             <div className="sidebar-header">
                 <div className="row" style={{ padding: '0.5em' }}>
-                    <div className="col-4" style={{ textAlign: 'end', paddingRight: '0', paddingTop: '10px' }}>
+                    <div className="col-4 sidebar-graduation-hat" style={{ textAlign: 'end', paddingRight: '0', paddingTop: '10px' }}>
                         <img src={graduationHat} width="70" height="70" alt="logo" />
                     </div>
-                    <div className="col-5" style={{ fontSize: '26px', textAlign: 'center', fontFamily: 'Montserrat' }}>
+                    <div className="sidebar-app-name col-5" style={{ textAlign: 'center', fontFamily: 'Montserrat' }}>
                         College Space
                     </div>
                     <div className="col-1 times">
@@ -61,7 +61,7 @@ const SideBar = ({ isOpen, toggle = () => { }, logout = () => { }, attendance = 
             <div className="side-menu">
                 <Nav vertical className="list-unstyled pb-5">
                     <NavItem>
-                        <NavLink tag={Link} to={"/dashboard"} activeClassName="sidebar-active-tab" >
+                        <NavLink tag={Link} to={"/dashboard"} activeClassName="sidebar-active-tab">
                             <FontAwesomeIcon icon={faHome} style={{ marginRight: '10px' }} />
                             Dashboard
                         </NavLink>
