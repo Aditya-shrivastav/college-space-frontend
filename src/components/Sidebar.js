@@ -9,8 +9,10 @@ import ReactLoading from 'react-loading';
 import { NavLink as Link } from "react-router-dom";
 import { Nav, NavItem, NavLink } from "reactstrap";
 import app from '../firebaseConfig';
+import graduationHat from '../images/graduation-hat.png';
 import { ADMIN, STUDENT, TEACHER } from "../shared/constants";
 import history from "../shared/history";
+
 const db = getFirestore(app);
 
 const q = query(collection(db, "events"));
@@ -42,16 +44,24 @@ const SideBar = ({ isOpen, toggle = () => { }, logout = () => { }, attendance = 
     return (
         <div className={classNames("sidebar", { "is-open": isOpen })}>
             <div className="sidebar-header">
-                <span color="info" onClick={toggle} style={{ color: "#fff" }}>
-                    &times;
-                </span>
-
-                <h4><img src="/gu-logo.png" width="35" height="35" alt="logo" />  Galgotias University</h4>
+                <div className="row" style={{ padding: '0.5em' }}>
+                    <div className="col-4 sidebar-graduation-hat" style={{ textAlign: 'end', paddingRight: '0', paddingTop: '10px' }}>
+                        <img src={graduationHat} width="70" height="70" alt="logo" />
+                    </div>
+                    <div className="sidebar-app-name col-5" style={{ textAlign: 'center', fontFamily: 'Montserrat' }}>
+                        College Space
+                    </div>
+                    <div className="col-1 times">
+                        <span color="info" onClick={toggle} style={{ color: "#fff" }}>
+                            &times;
+                        </span>
+                    </div>
+                </div>
             </div>
             <div className="side-menu">
                 <Nav vertical className="list-unstyled pb-5">
                     <NavItem>
-                        <NavLink tag={Link} to={"/dashboard"} activeClassName="sidebar-active-tab" >
+                        <NavLink tag={Link} to={"/dashboard"} activeClassName="sidebar-active-tab">
                             <FontAwesomeIcon icon={faHome} style={{ marginRight: '10px' }} />
                             Dashboard
                         </NavLink>
