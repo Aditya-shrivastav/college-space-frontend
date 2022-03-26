@@ -109,7 +109,7 @@ class Main extends React.Component {
                     <Route exact path="/" component={() => <Login login={this.props.loginUser} getUser={this.props.getUser} />} />
                     <Route path="/signup" component={() => <Signup signup={this.props.signupUser} />} />
                     <PrivateRoute path="/dashboard" component={DashBoard} />
-                    <PrivateRoute path="/contactUs" component={ContactUS} />
+                    {/* <PrivateRoute path="/contactUs" component={ContactUS} /> */}
                     <PrivateRoute path="/attendance" component={() => <Attendance student={this.props.student} logout={this.props.logout} attendance={this.props.fetchAttendace} courses={this.props.fetchStudentCourses} timeTable={this.props.fetchTimeTable} unreadEvents={this.props.fetchUnreadEvents} />} />
                     <PrivateRoute path="/showCourses/:page" component={CourseRouter} />
                     <PrivateRoute path="/markAttendance/:id" component={AttendanceRouter} />

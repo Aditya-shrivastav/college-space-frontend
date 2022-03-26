@@ -3,28 +3,130 @@ body{
 }
 
 .App {
+  overflow: hidden;
   display: flex;
   width: 100vw;
   height: 100vh;
 }
 
+/* Cards Section */
+.card{
+  box-shadow: 10px 20px 10px rgba(0, 0, 0, 0.25);
+  border-radius: 20px;
+  border: none
+}
+
+.card-header{
+  text-align: center;
+  border-bottom: 1px solid black;
+  background: #FFFFFF;
+}
+
+.card-footer{
+  background: #FFFFFF;
+}
+
+/* Card Section End */
+
 .login-body {
-  background: linear-gradient(to bottom right, #ffffff 50%, #800000 100%);
+  background: #FFFFFF;
+  position: relative;
   height: 100vh;
   width: 100vw;
+  margin: 0;
+  padding: 0;
+  border: 1px solid black;
   font-family: "Domine", serif;
 }
 
-.login-form,
-.signup-form {
-  height: 100vh;
+.vector{
+  position: absolute;
+  width: 1440.05px;
+  height: 1728.02px;
+  left: 115.16px;
+  top: 355.13px;
+  z-index: -1;
+  background: url('./images/vg-vector.png') no-repeat;
+}
+
+.app-name{
+  position: absolute;
+  width: 128px;
+  height: 64px;
+  left: 79px;
+  top: 145px;
+  font-family: 'Montserrat';
+  font-style: normal;
+  font-weight: 800;
+  font-size: 26px;
+  line-height: 32px;
+  text-align: center;
+  color: #FFFEFE;
+}
+
+.graduation-hat{
+  position: absolute;
+  width: 100px;
+  height: 100px;
+  left: 100px;
+  top: 38px;
+  object-fit: contain;
+  background-image: url('./images/graduation-hat.png');
+}
+
+.notebook{
+  position: absolute;
+  width: 247px;
+  height: 256px;
+  left: 237px;
+  top: 270px;
+  background: url('./images/notebook2.png') no-repeat;
+}
+
+.quote{
+  position: absolute;
+  width: 259px;
+  height: 62px;
+  left: 455px;
+  top: 360px;
+  font-family: 'Domine' ;
+  font-style: normal;
+  font-weight: bold;
+  font-size: 24px;
+  line-height: 31px;
+  text-align: center;
+  color: #2B2B2B;
 }
 
 .login-box {
-  width: 20em;
-  height: 70vh;
-  border-radius: 10px;
-  box-shadow: 5px 10px 18px #4d4d4d;
+  position: absolute;
+  width: 370px;
+  height: 620px;
+  left: 1010px;
+  top:  58px;
+  background: #FFFEFE;
+  border-radius: 20px;
+  box-shadow: 15px 25px 10px rgba(0, 0, 0, 0.25);
+}
+
+.login-button{
+  margin-left: 35px;
+}
+
+.login-box div .login-name{
+  text-align: 'center';
+  margin-bottom: '15px';
+  margin-top: '25px';
+  font-weight: '600';
+}
+
+.forget-password{
+  margin-top: 8px;
+}
+
+.go-signup{
+  text-align: 'center';
+  margin-top: 3em;
 }
 
 .signup-box {
@@ -42,7 +144,7 @@ body{
 .sidebar {
   min-width: 320px;
   max-width: 320px;
-  background: #7386d5;
+  background: linear-gradient(171.87deg, #A1C4FD 0%, #C2E9FB 85.3%);
   color: white;
   height: 100vh;
   margin-left: -320px;
@@ -55,13 +157,15 @@ body{
 }
 
 .sidebar-header {
-  background: #6699ff;
-  border-bottom: 2px solid black;
+  border-bottom: 2px solid white;
 }
 
-.sidebar-header h4 {
+.sidebar-header .row .times span {
   color: white;
-  padding: 1em;
+  font-size: 35px;
+  font-style: normal;
+  font-family: 'Montserrat';
+  text-align: center;
 }
 
 .nav-item:hover {
@@ -78,11 +182,15 @@ body{
 }
 
 .sidebar-active-tab{
-  background: #fff;
+  background: #82b1fc;
   color: #7386d5 !important;
 }
 
-.sidebar-header > span {
+.sidebar-header .row .sidebar-app-name{
+  font-size: 26px;
+}
+
+.sidebar-header > .row .times {
   position: relative;
   float: right;
   margin: 0.5em;
@@ -116,21 +224,24 @@ body{
 
 .sidepanel .user-details{
   background: white;
-  box-shadow:  1rem 1rem 2rem rgba(0,0,0,.3);
-  border-radius: 1em;
+  box-shadow:  15px 25px 10px rgba(0, 0, 0, 0.25);
+  border-radius: 20px;
   padding: 20px;
+  width: 65vw;
+  height: 75vh;
 }
 
 .sidepanel .user-details .user-info .details{
   padding: 10px;
+  margin-left: 30px;
 }
 
 .content {
+  z-index: 1;
   padding: 20px;
   margin-left: 0;
   height: 100vh;
   font-family: 'Domine', serif;
-  background:linear-gradient(to top right, #f2f2f2 5%, #ff5050 90%, #b3ccff 5%);
 }
 
 .content .panel-header-row{
@@ -147,7 +258,7 @@ body{
   scrollbar-width: none;
 }
 
-.attendance-cards::-webkit-scrollbar, .students-list::-webkit-scrollbar, .timetable-cards::-webkit-scrollbar, .events-cards::-webkit-scrollbar{
+.attendance-cards::-webkit-scrollbar, .students-list::-webkit-scrollbar, .timetable-cards::-webkit-scrollbar, .events-cards::-webkit-scrollbar, .chat-list-container::-webkit-scrollbar{
   display: none;
 }
 
@@ -155,6 +266,13 @@ body{
   overflow-y: scroll;
   height: 60vh;
   font-size: 18px;
+  -ms-overflow-style: none;  /* IE and Edge */
+  scrollbar-width: none;
+}
+
+.chat-list-container{
+  overflow-y: scroll;
+  height: 65vh;
   -ms-overflow-style: none;  /* IE and Edge */
   scrollbar-width: none;
 }
@@ -211,6 +329,18 @@ body{
   border: '1px solid black' ;
 }
 
+.chat-list{
+ border-bottom: 1px solid #c3daff;
+ padding: 0.5em;
+ margin: 0 2em;
+}
+.chat-list .user-name{
+  margin-top: auto;
+  margin-bottom: auto;
+  text-decoration: none !important;
+  color: black !important;
+  float: left;
+}
 /* 
 .side-menu::-webkit-scrollbar {
   width: 10px;
@@ -224,6 +354,9 @@ body{
 .side-menu::-webkit-scrollbar-thumb:hover {
   background: #3a4c99;
 } */
+
+
+/* Moto G4 and similar Sizes */
 
 @media only screen and (max-width: 500px) {
   /* body {
@@ -241,7 +374,7 @@ body{
     transition: all 0.5s, height 0s;
   }
 
-  .sidebar.is-open > .sidebar-header span {
+  .sidebar.is-open > .sidebar-header .row .times {
     display: unset;
   }
 
@@ -257,6 +390,31 @@ body{
   .user-img img{
     width: 80px;
     height: 80px;
+  }
+
+  .login-body svg, .app-name, .graduation-hat, .notebook, .quote{
+    display: none;
+  }
+
+  .login-body{
+    position: unset;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .login-box {
+    position: unset;
+    padding: 10px;
+    height: inherit;
+    width: inherit !important;
+    box-shadow: unset;
+    border-radius: unset;
+    font-size: 18px !important;
+  }
+
+  .login-button{
+    margin-left: 0;
   }
 
 }
@@ -278,13 +436,40 @@ body{
     min-width: 100%;
     max-width: 100%;
     margin-left: 0;
+    overflow: hidden;
     transition: all 0.5s, height 0s;
   }
-  .sidebar.is-open > .sidebar-header span {
+  .sidebar.is-open > .sidebar-header .row .times {
     display: unset;
   }
+  .sidepanel .user-details{
+    height: 70vh;
+    width: 92vw;
+  }
+  .sidepanel .user-details .user-info .details{
+    padding: 3px;
+  }
+  #panel-header-row{
+    height: 15vh !important;
+  }
+  .content #user-chats{
+    width: 90vw !important;
+    height: 60vh !important;
+    font-size: 10px !important;
+    margin: 0 !important;
+    padding: 0 !important
+  }
+  .content #user-chats .sent-text{
+    margin-left: 2em !important
+  }
+  .content #user-chats .recieved-text{
+    margin-right: 2em !important
+  }
   .attendance-cards, .events-cards{
-    height: 78vh;
+    height: 70vh !important;
+  }
+  .chat-list-container{
+    height: 60vh;
   }
   .timetable-cards{
     height: 40vh;
@@ -295,6 +480,12 @@ body{
   }
   .course-wrapper{
     margin: '10px'
+  }
+  .card-img img{
+    width: 70vw
+  }
+  .vector{
+    display: none;
   }
 }
 
@@ -323,7 +514,119 @@ body{
   
 }
 
+/*Ipad*/
 @media all and (device-width: 768px) and (device-height: 1024px) and (orientation:portrait) {
+
+  .login-body{
+    overflow: hidden !important;
+  }
+
+  .content.is-open {
+    display: none;
+  }
+
+  .sidebar{
+    overflow: hidden;
+  }
+
+  .sidebar.is-open {
+    min-width: 100%;
+    max-width: 100%;
+    margin-left: 0;
+    font-size: 25px;
+    transition: all 0.5s, height 0s;
+  }
+
+  .sidebar.is-open > .sidebar-header .row .times {
+    display: unset;
+  }
+
+  .sidepanel .user-details{
+    height: 70vh;
+    width: 92vw;
+  }
+
+  .login-body .lower-svg-vector{
+    width: 1000px
+  }
+
+  .login-body .upper-svg-vector{
+    width: 350px;
+    height: 250px
+  }
+
+  .app-name{
+    width: 80px;
+    height: 40px;
+    top: 100px;
+    left: 50px;
+    text-align: center;
+  }
+
+  .graduation-hat{
+    top: 20px;
+    left: 35px;
+  }
+
+  .notebook{
+    display: none;
+  }
+
+  .quote{
+    left: 100px;
+    top: 300px;
+    font-size: 20px
+  }
+
+  .login-box{
+    left: 450px;
+    top: 70px;
+    width: 270px;
+    height: 550px;
+  }
+
+  .vector{
+    display: none;
+  }
+
+  #panel-header-row{
+    height: 10vh !important;
+  }
+
+  .content #user-chats{
+    width: 95vw !important;
+    height: 70vh !important;
+    font-size: 15px !important;
+    margin: 0 !important;
+    padding: 0 !important
+  }
+  .content #user-chats .sent-text{
+    margin-left: 4em !important
+  }
+  .content #user-chats .recieved-text{
+    margin-right: 4em !important
+  }
+  .sidebar-header .row .sidebar-app-name{
+    font-size: 40px !important;
+    margin: auto !important;
+  }
+  .sidebar-header .row .times span {
+    font-size: 55px !important;
+    text-align: center;
+  }
+  .sidebar-header .row .sidebar-graduation-hat{
+    margin: auto !important;
+    width: 100px;
+  }
+}
+
+/* Ipad pro and bigger Screen */
+@media all and (device-width: 1024px) and (min-device-height: 600px), 
+(device-width: 1280px) and (min-device-height: 800px){
+  .login-body{
+    overflow: hidden !important;
+  }
+
   .content.is-open {
     display: none;
   }
@@ -332,13 +635,402 @@ body{
     min-width: 100%;
     max-width: 100%;
     margin-left: 0;
+    font-size: 30px;
     transition: all 0.5s, height 0s;
   }
-  .sidebar.is-open > .sidebar-header span {
+
+  .sidebar{
+    overflow: hidden;
+  }
+  .sidebar.is-open > .sidebar-header .row .times {
     display: unset;
   }
 
+  .login-body .lower-svg-vector{
+    width: 1100px
+  }
+
+  .login-body .upper-svg-vector{
+    width: 350px;
+    height: 250px
+  }
+
+  .app-name{
+    width: 80px;
+    height: 40px;
+    top: 100px;
+    left: 50px;
+    text-align: center;
+  }
+
+  .graduation-hat{
+    top: 20px;
+    left: 35px;
+  }
+
+  .notebook{
+    left: 100px;
+    top: 250px;
+  }
+
+  .quote{
+    left: 300px;
+    top: 350px;
+    font-size: 20px
+  }
+
+  .login-box{
+    left: 650px;
+    top: 50px;
+    width: 300px;
+    height: 520px;
+  }
+
+   .vector{
+    display: none;
+  }
+
+  #panel-header-row{
+    height: 10vh !important;
+  }
+
+  .content #user-chats{
+    width: 95vw !important;
+    height: 65vh !important;
+    font-size: 15px !important;
+    margin: 0 !important;
+    padding: 0 !important
+  }
+  .content #user-chats .sent-text{
+    margin-left: 4em !important
+  }
+  .content #user-chats .recieved-text{
+    margin-right: 4em !important
+  }
+  .sidebar-header .row .sidebar-app-name{
+    font-size: 40px !important;
+    margin: auto !important;
+  }
+  .sidebar-header .row .times span {
+    font-size: 55px !important;
+    text-align: center;
+  }
+  .sidebar-header .row .sidebar-graduation-hat{
+    margin: auto !important;
+    width: 100px;
+  }
+  .sidepanel .user-details{
+    height: 70vh;
+    width: 92vw;
+  }
+  .card-img img{
+    width: 320px !important;
+    height: 320px;
+  }
+} 
+
+@media all and (device-width: 1024px) and (device-height: 600px){
+  .content #user-chats{
+    width: 95vw !important;
+    height: 57vh !important;
+    font-size: 15px !important;
+    margin: 0 !important;
+    padding: 0 !important
+  }
+  .sidebar-header .row .sidebar-app-name{
+    font-size: 40px !important;
+    margin: auto !important;
+  }
+  .sidebar-header .row .times span {
+    font-size: 55px !important;
+    text-align: center;
+  }
+  .sidebar-header .row .sidebar-graduation-hat{
+    margin: auto !important;
+    width: 100px;
+  }
+  .sidepanel .user-details{
+    height: 65vh;
+    width: 92vw;
+    overflow: scroll;
+    border: none;
+    box-shadow: none;
+  }
+  .sidepanel .user-details .user-info .details{
+    padding: 2px !important;
+    margin: 0 !important;
+  }
+  .card-img img{
+    width: 320px !important;
+    height: 320px;
+  }
+  .sidebar{
+    font-size: 20px !important;
+  }
 }
+
+
+@media all and (device-width: 540px) and (device-height: 720px) and (orientation:portrait) {
+  
+  .login-body{
+    overflow: hidden !important;
+  }
+
+  .login-body .lower-svg-vector{
+    width: 1100px
+  }
+
+  .login-body .upper-svg-vector{
+    width: 350px;
+    height: 250px
+  }
+
+  .sidebar{
+    overflow: hidden;
+    font-size: 20px;
+  }
+
+  .app-name{
+    width: 80px;
+    height: 40px;
+    top: 100px;
+    left: 50px;
+    text-align: center;
+  }
+
+  .graduation-hat{
+    top: 20px;
+    left: 35px;
+  }
+
+  .notebook, .quote{
+    display: none
+  }
+
+  .login-box{
+    left: 170px;
+    top: 90px;
+    width: 300px;
+    height: 570px;
+  }
+
+  .vector{
+    display: none;
+  }
+  
+  #panel-header-row{
+    height: 15vh !important;
+  }
+
+  .content #user-chats{
+    width: 95vw !important;
+    height: 65vh !important;
+    font-size: 15px !important;
+    margin: 0 !important;
+    padding: 0 !important
+  }
+  .content #user-chats .sent-text{
+    margin-left: 2em !important
+  }
+  .content #user-chats .recieved-text{
+    margin-right: 2em !important
+  }
+  .sidebar-header .row .sidebar-app-name{
+    font-size: 30px !important;
+    margin: auto !important;
+  }
+  .sidebar-header .row .times span {
+    font-size: 45px !important;
+    text-align: center;
+  }
+  .sidebar-header .row .sidebar-graduation-hat{
+    margin: auto !important;
+    width: 100px;
+  }
+  .sidepanel .user-details{
+    height: 70vh;
+    width: 92vw;
+  }
+  .card-img img{
+    width: 320px !important;
+    height: 320px;
+  }
+} 
+
+@media all and (max-device-width: 850px) and (max-device-height: 550px) and (orientation:landscape) {
+
+  .login-body{
+    position: relative;
+    overflow: hidden;
+  }
+
+  .login-body .lower-svg-vector{
+    position: absolute;
+    width: 550px;
+    left: 120px;
+    top: 0px;
+  }
+
+  .login-body .upper-svg-vector{
+    position: absolute;
+    top: 0;
+    width: 220px;
+    height: 180px;
+  }
+
+  .app-name{
+    top: 60px;
+    left: 10px;
+    text-align: center;
+    font-size: 18px;
+  }
+
+  .quote{
+    top: 170px;
+    left: 180px;
+    width: 150px;
+    font-size: 15px;
+  }
+
+  .graduation-hat{
+    background: url('./images/graduation-hat-small.png') no-repeat;
+    top: 10px;
+    left: 40px;
+  }
+
+  .notebook{
+    background: url('./images/notebook2-sm.png') no-repeat;
+    top: 160px;
+    left: 70px;
+  }
+
+  .login-box div img{
+    display: none !important;
+  }
+
+  .login-box{
+    left: 380px;
+    top : 2px;
+    width: 200px;
+    height: 350px;
+    font-size: 15px !important;
+  }
+
+  .login-box div .login-name{
+    margin-top: 0px;
+    padding-top: 0px;
+  }
+
+  .forget-password{
+    padding: 0;
+    margin: 0;
+  }
+
+  .login-button{
+    padding-left: 1px;
+    margin: 0;
+  }
+
+  .go-signup{
+    margin-top: 1em;
+  }
+
+  .vector{
+    display: none;
+  }
+
+  .sidebar{
+    overflow-y: scroll;
+    overflow-x: hidden;
+    font-size: 15px;
+  }
+
+  .sidebar .sidebar-header .sidebar-app-name, .sidebar .sidebar-header .sidebar-graduation-hat{
+    margin: auto;
+  }
+
+  .content #user-chats{
+    width: 95vw !important;
+    height: 53vh !important;
+    font-size: 15px !important;
+    margin: 0 !important;
+    padding: 0 !important
+  }
+
+  .sidepanel .user-details{
+    height: 65vh;
+    width: 95vw;
+    overflow: scroll;
+    box-shadow: none;
+    border: none;
+  }
+  .sidepanel .user-details .user-info .details{
+    padding: 5px !important;
+    margin: 0 !important;
+  }
+  #panel-header-row .gu-logo-page{
+    display: none;
+  }
+  #panel-header-row{
+    height: 10vh !important;
+  }
+  .content #user-chats .sent-text{
+    margin-left: 2em !important
+  }
+  .content #user-chats .recieved-text{
+    margin-right: 2em !important
+  }
+} 
+
+@media all and (device-width: 731px) and (device-height: 411px) and (orientation:landscape), (device-width: 823px) and (device-height: 411px) and (orientation:landscape), (device-width: 736px) and (device-height: 414px) and (orientation:landscape),(device-width: 720px) and (device-height: 540px) and (orientation:landscape){
+  .login-body .lower-svg-vector{
+    position: absolute;
+    width: 1000px;
+    left: 100px;
+    top: 30px;
+  }
+  .login-box{
+    left: 470px;
+    top: 30px;
+  }
+}
+
+@media all and (device-width: 667px) and (device-height: 375px) and (orientation:landscape), (device-width: 812px) and (device-height: 375px) and (orientation:landscape){
+   .login-body .lower-svg-vector{
+    position: absolute;
+    width: 1000px;
+    left: 100px;
+    top: 30px;
+  }
+  .login-box{
+    left: 420px;
+    top: 10px;
+  }
+}
+
+@media all and (device-width: 720px) and (device-height: 540px) and (orientation:landscape){
+  .login-body .lower-svg-vector{
+    position: absolute;
+    width: 1000px;
+    left: 100px;
+    top: 70px;
+  }
+}
+
+@media all and (device-width: 1280px) and (device-height: 800px) and (orientation:landscape){
+  .login-body .lower-svg-vector{
+    position: absolute;
+    width: 1000px;
+    left: 400px;
+    top: 200px;
+  }
+  .login-box{
+    left: 820px;
+    top: 50px;
+  }
+}
+
+
 @media all and (device-width: 1024px) and (device-height: 768px) and (orientation:landscape) {
   .content.is-open {
     display: none;
@@ -350,10 +1042,27 @@ body{
     margin-left: 0;
     transition: all 0.5s, height 0s;
   }
-  .sidebar.is-open > .sidebar-header span {
+  .sidebar.is-open > .sidebar-header .row .times {
     display: unset;
   }
+  .sidepanel .user-details .user-info .details{
+    padding: 5px !important;
+    margin: 0 !important;
+  }
+}
 
+@media all and (min-device-width: 1300px) and (device-height: 1024px) and (orientation:landscape) {
+  .App{
+    overflow: hidden !important;
+  }
+  .sidebar{
+    overflow: hidden;
+  }
+  .vector{
+    width: 1200px;
+    left: 185.16px;
+    top: 545.13px;
+  }
 }
 
 @media only screen and (max-width: 900px) {
@@ -372,7 +1081,7 @@ body{
     transition: all 0.5s, height 0s;
   }
 
-  .sidebar.is-open > .sidebar-header span {
+  .sidebar.is-open > .sidebar-header .row .times {
     display: unset;
   }
 
@@ -399,6 +1108,10 @@ body{
     height: 75vh;
   }
 
+  .chat-list-container{
+    height: 65vh;
+  }
+
   .events-cards #event-rows{
     margin: 0.2em
   } 
@@ -412,30 +1125,45 @@ body{
   }
 
   .timetable-cards{
-    height: 60vh;
+    overflow: scroll;
+    height: 50vh;
   }
+
 }
 
-@media only screen and (max-width: 575px) {
-  .signup-box div Form .form {
-    margin-left: 0px;
+@media all and (max-device-width: 655px) and (max-device-height: 322px) and (orientation: landscape){
+
+  .login-box{
+    top: 0;
+    height: 320px;
+    font-size: 10px !important;
   }
-  .signup-box {
-    font-size: 15px;
-    width: 25em;
+
+  .content #user-chats{
+    width: 95vw !important;
+    height: 47vh !important;
+    font-size: 15px !important;
+    margin: 0 !important;
+    padding: 0 !important
   }
-  .signup-box div Form .section,
-  .signup-box div Form .semester,
-  .signup-box div Form .branch,
-  .signup-box div Form .userType {
-    width: 45%;
-    margin-right: 4%;
-  }
-  
 }
 
 @media only screen and (max-width: 345px){
   .content .uploaded-files{
+    height: 55vh;
+  }
+  .login-box{
+    font-size: 15px !important;
+  }
+  #panel-header-row{
+    height: 18vh !important;
+  }
+  .sidepanel .user-details{
+    overflow: scroll;
+    border: none;
+    box-shadow: none;
+  }
+  .chat-list-container{
     height: 55vh;
   }
 }

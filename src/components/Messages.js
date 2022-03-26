@@ -5,15 +5,39 @@ import classNames from 'classnames';
 import React, { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
 import { Button, Col, Container, Modal, ModalBody, ModalHeader, Row } from 'reactstrap';
-import { baseUrl } from '../shared/constants';
+import { baseUrl, STUDENT } from '../shared/constants';
+import GuLogo from '../images/Galgotias_University.png'
+
+const UserCards = ({ user, searched }) => {
+
+    return (
+        <div className="card" style={{ margin: '0.5em' }}>
+            <div className="card-body">
+                <p className="card-text" style={{ textAlign: 'center' }}>
+                    <img style={{ borderRadius: '50%' }} src={user.imageUrl} alt="user-profile" width="100px" height="100px" />
+                </p>
+                <p className="card-text">Name : {user.name}</p>
+                <p className="card-text">Primary Subject : {user.subject}</p>
+                <p className="card-text">Role : {user.position}</p>
+            </div>
+            <Link to={`/conversation/${user.userId}/${user.name}`} style={{ alignSelf: 'center', paddingBottom: '10px' }}><Button size="sm" color="primary">{searched ? 'Message' : 'Continue Conversation'}<FontAwesomeIcon icon={faChevronRight} style={{ marginLeft: '5px' }} /></Button></Link>
+        </div>
+    )
+}
 
 const MessagesPage = ({ toggleSidebar, sideBarIsOpen }) => {
 
     let [searched, setSearchedResult] = useState([])
-    let [isOpen, toggleModal] = useState(false)
     let [chats, setChats] = useState([])
+    let [query, setQuery] = useState(null)
+
 
     const handleChange = (e) => {
+
+        if (e.target.value.length === 0) {
+            setQuery(null)
+        }
+        setQuery(e.target.value)
         axios(`${baseUrl}/students/searchFaculty`, {
             method: 'GET',
             headers: {
@@ -26,21 +50,12 @@ const MessagesPage = ({ toggleSidebar, sideBarIsOpen }) => {
             console.log(resp.data.list)
             setSearchedResult(resp.data.list)
         })
+
     }
 
     useEffect(() => {
         getChatsList();
     }, [])
-
-    const toggle = () => {
-        setSearchedResult([])
-        toggleModal(!isOpen)
-    }
-
-    const handleClick = () => {
-        setSearchedResult([])
-        toggle()
-    }
 
     const getChatsList = () => {
         axios(`${baseUrl}/users/getChats`, {
@@ -49,77 +64,81 @@ const MessagesPage = ({ toggleSidebar, sideBarIsOpen }) => {
                 'x-auth-token': localStorage.getItem('token')
             }
         }).then((resp) => {
-            setChats(resp.data.users)
+            if (resp.data.success)
+                setChats(resp.data.users)
         })
     }
 
-    const showChatList = chats.map((chat) => {
-        return (
-            <Link to={`/conversation/${chat.userId}/${chat.name}`}>
-                <Col style={{ background: '#f2f2f2', borderRadius: '0.5em', margin: '5px', boxShadow: '2px 5px 5px #4d4d4d', padding: '5px' }} >
-                    {chat.name}
-                </Col>
-            </Link>
-        )
-    })
-
-    let showSearchResult = searched.map((result) => {
-        return (
-            <Col md="11" style={{ background: '#f2f2f2', borderRadius: '0.5em', margin: '5px', boxShadow: '2px 5px 5px #4d4d4d', padding: '5px' }} onClick={handleClick}>
-                <Link to={`/conversation/${result.userId}`}>
-                    <Row>
-                        <Col md="1" style={{ marginTop: '5px' }}>
-                            {result.imageUrl ? <img src={result.imageUrl} alt="img" style={{ width: '40px', height: '40px', borderRadius: '50%' }} /> : null}
-                        </Col>
-                        <Col md="10" style={{ marginLeft: '15px' }}>
-                            <div>Name : {result.name}</div>
-                            <div style={{ color: '#999999' }}> &nbsp;{result.email}</div>
-                        </Col>
-                    </Row>
-                </Link>
-            </Col>
-        )
-    })
-    return (
-        <Container fluid className={classNames("content", { "is-open": sideBarIsOpen })}
-        >
-            {
-                !sideBarIsOpen ?
-                    <Button color="gray" onClick={toggleSidebar} style={{ marginBottom: '10px', border: '1px solid black' }}>
-                        <FontAwesomeIcon icon={faAlignLeft} />
-                    </Button> :
-                    <div style={{ display: 'none' }}></div>
-
-            }
-            <Row id='panel-header-row' style={{ height: '50px', margin: '0 0.5em', padding: '0 0.2em' }}>
-                <Col xs={12} style={{ alignSelf: 'center', fontFamily: 'Domine', fontSize: '18px' }}>
-                    Messages<FontAwesomeIcon icon={faChevronRight} style={{ marginLeft: '5px' }} />
-                </Col>
-            </Row>
-            <Row style={{ margin: '10px', marginBottom: '0' }}>
-                <Col xs={12}>
-                    <Modal isOpen={isOpen} toggle={toggle}>
-                        <ModalHeader>Find Faculty <FontAwesomeIcon icon={faSearch} style={{ marginLeft: '10px' }} /></ModalHeader>
-                        <ModalBody>
-                            <Col md="12">
-                                <input className="form-control" type="text" placeholder="Search" aria-label="Search" onChange={handleChange} />
+    const showResults = () => {
+        let result =
+            query ?
+                searched?.length > 0 ?
+                    searched.map((result) => {
+                        return (
+                            <Col xs={12} md={4} className='user-name'>
+                                <UserCards user={result} searched={true} />
                             </Col>
-                            <Row style={{ marginTop: '10px', marginLeft: '0.5em' }}>
-                                {searched.length > 0 ? showSearchResult : <div></div>}
-                            </Row>
-                        </ModalBody>
-                    </Modal>
-                </Col>
-            </Row>
-            <Row style={{ margin: '0.5em 0.5em' }}>
-                <Col md="3" xs="6" style={{ marginLeft: 'auto' }}>
-                    <Button color='blue' style={{ border: '1px solid black' }} onClick={toggle}>Search<FontAwesomeIcon icon={faSearch} style={{ marginLeft: '10px' }} /></Button>
-                </Col>
-            </Row>
-            <Row>
-                {chats.length > 0 ? showChatList : <div></div>}
-            </Row>
-        </Container>
+                        )
+                    })
+                    :
+                    <div style={{ margin: '1em', fontWeight: 'bold' }}>
+                        No user Found !
+                    </div>
+                :
+                chats?.length > 0 ?
+                    chats.map((result) => {
+                        return (
+                            <Col xs={12} md={4} className='user-name'>
+                                <UserCards user={result} searched={false} />
+                            </Col>
+                        )
+                    })
+                    :
+                    <div style={{ margin: '1em', fontWeight: 'bold' }}>
+                        Start new Conversation !
+                    </div>
+
+        return result;
+    }
+
+    return (
+        <>
+            <div className="vector"></div>
+            <Container fluid className={classNames("content", { "is-open": sideBarIsOpen })}
+            >
+                {
+                    !sideBarIsOpen ?
+                        <Button color="gray" onClick={toggleSidebar} style={{ marginBottom: '10px', border: '1px solid black' }}>
+                            <FontAwesomeIcon icon={faAlignLeft} />
+                        </Button> :
+                        <div style={{ display: 'none' }}></div>
+
+                }
+                <Row id='panel-header-row' style={{ height: '50px', margin: '0 0.5em', padding: '0 0.2em', marginBottom: '3em' }}>
+                    <Col xs={6} style={{ alignSelf: 'center', fontFamily: 'Domine', fontSize: '18px', color: '#7EACF8' }}>
+                        Messages<FontAwesomeIcon icon={faChevronRight} style={{ marginLeft: '5px' }} />
+                    </Col>
+                    <Col className="gu-logo-page" xs={6} style={{ textAlign: 'end' }}>
+                        <img width="96px" height="90px" src={GuLogo} alt="logo" />
+                    </Col>
+                </Row>
+                {
+                    localStorage.getItem('user') === STUDENT ?
+                        <Row style={{ margin: '0.5em 0.5em' }}>
+                            <Col md="3" xs="12" style={{ marginLeft: 'auto' }}>
+                                <input className="form-control" type="text" placeholder='Search Faculty' aria-label="Search" onChange={handleChange} />
+                            </Col>
+                        </Row>
+                        :
+                        <div></div>
+                }
+                <Row className='chat-list-container'>
+                    {
+                        showResults()
+                    }
+                </Row>
+            </Container>
+        </>
     )
 }
 
