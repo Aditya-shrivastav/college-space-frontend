@@ -1,4 +1,0 @@
-[build]
-    command= "CI= npm run build"
-    functions= "built-lambda"
-    publish= "build"

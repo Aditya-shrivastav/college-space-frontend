@@ -1,6 +1,5 @@
 import { faAlignLeft, faChevronRight } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { Mail, MailOutline, Person } from '@mui/icons-material';
 import classNames from 'classnames';
 import React, { useState } from 'react';
 import { Button, Col, Container, Row, Card } from 'reactstrap';
