@@ -91,111 +91,109 @@ const DashboardPage = ({ toggleSidebar, sideBarIsOpen, user }) => {
 
 
     return (
-        <>
-            <div className="vector"></div>
-            <Container
-                fluid
-                className={classNames("content", { "is-open": sideBarIsOpen })}
-            >
-                {
-                    !sideBarIsOpen ?
-                        <Button color="gray" onClick={toggleSidebar} style={{ marginBottom: '10px', border: '1px solid black' }}>
-                            <FontAwesomeIcon icon={faAlignLeft} />
-                        </Button> :
-                        <div style={{ display: 'none' }}></div>
 
-                }
-                <Row id='panel-header-row' style={{ height: '50px', margin: '0 0.5em', padding: '0 0.2em', marginBottom: '3em' }}>
-                    <Col xs={6} md={6} style={{ alignSelf: 'center', fontFamily: 'Domine', fontSize: '18px', color: '#7EACF8' }}>
-                        Dashboard<FontAwesomeIcon icon={faChevronRight} style={{ marginLeft: '5px' }} />
-                    </Col>
-                    <Col className="gu-logo-page" xs={6} md={6} style={{ textAlign: 'end' }}>
-                        <img width="96px" height="90px" src={GuLogo} alt="logo" />
-                    </Col>
-                </Row>
-                {
-                    user.success ?
-                        <Row className="sidepanel" >
-                            <div class="user-details">
-                                <Row className="user-img">
-                                    <Col xs={12} >
-                                        <img src={values.image} className="rounded-circle" alt="default" height="150" width="150" />
-                                    </Col>
-                                    <Col xs={12} style={{ paddingTop: '30px' }}>
-                                        <Modal isOpen={isOpen} toggle={toggleModal}>
-                                            <ModalHeader>Choose File:</ModalHeader>
-                                            <ModalBody>
-                                                <div className="form-group">
-                                                    <input className="form-control" type="file" id="formFile" onChange={handleFileChange} accept="image/*" />
-                                                </div>
-                                            </ModalBody>
-                                            <ModalFooter>
-                                                <Button color="primary" onClick={handleUpload} size='sm' >
-                                                    Upload Files
-                                                </Button>
-                                                <Button onClick={toggleModal} size='sm' color="black">Cancel</Button>
-                                            </ModalFooter>
-                                        </Modal>
-                                        <Button size="sm" color="primary" onClick={toggleModal} style={{ borderRadius: '20px' }}>
-                                            Upload Image
-                                        </Button>
-                                    </Col>
-                                </Row>
-                                <Row className="user-info">
-                                    <Col xs={12} className="details">
-                                        Name: {user.user.name}
-                                    </Col>
-                                    <Col xs={12} className="details">
-                                        Email: {user.user.email}
-                                    </Col>
-                                    {
-                                        user.user.userType === STUDENT ?
+        <Container
+            fluid
+            className={classNames("content", { "is-open": sideBarIsOpen })}
+        >
+            {
+                !sideBarIsOpen ?
+                    <Button color="gray" onClick={toggleSidebar} style={{ marginBottom: '10px', border: '1px solid black' }}>
+                        <FontAwesomeIcon icon={faAlignLeft} />
+                    </Button> :
+                    <div style={{ display: 'none' }}></div>
+
+            }
+            <Row id='panel-header-row' style={{ height: '50px', margin: '0 0.5em', padding: '0 0.2em', marginBottom: '3em' }}>
+                <Col xs={6} md={6} style={{ alignSelf: 'center', fontFamily: 'Domine', fontSize: '18px', color: '#7EACF8' }}>
+                    Dashboard<FontAwesomeIcon icon={faChevronRight} style={{ marginLeft: '5px' }} />
+                </Col>
+                <Col className="gu-logo-page" xs={6} md={6} style={{ textAlign: 'end' }}>
+                    <img width="96px" height="90px" src={GuLogo} alt="logo" />
+                </Col>
+            </Row>
+            {
+                user.success ?
+                    <Row className="sidepanel" >
+                        <div class="user-details">
+                            <Row className="user-img">
+                                <Col xs={12} >
+                                    <img src={values.image} className="rounded-circle" alt="default" height="150" width="150" />
+                                </Col>
+                                <Col xs={12} style={{ paddingTop: '30px' }}>
+                                    <Modal isOpen={isOpen} toggle={toggleModal}>
+                                        <ModalHeader>Choose File:</ModalHeader>
+                                        <ModalBody>
+                                            <div className="form-group">
+                                                <input className="form-control" type="file" id="formFile" onChange={handleFileChange} accept="image/*" />
+                                            </div>
+                                        </ModalBody>
+                                        <ModalFooter>
+                                            <Button color="primary" onClick={handleUpload} size='sm' >
+                                                Upload Files
+                                            </Button>
+                                            <Button onClick={toggleModal} size='sm' color="black">Cancel</Button>
+                                        </ModalFooter>
+                                    </Modal>
+                                    <Button size="sm" color="primary" onClick={toggleModal} style={{ borderRadius: '20px' }}>
+                                        Upload Image
+                                    </Button>
+                                </Col>
+                            </Row>
+                            <Row className="user-info">
+                                <Col xs={12} className="details">
+                                    Name: {user.user.name}
+                                </Col>
+                                <Col xs={12} className="details">
+                                    Email: {user.user.email}
+                                </Col>
+                                {
+                                    user.user.userType === STUDENT ?
+                                        <>
+                                            <Col xs={12} className="details">
+                                                Section: {user.user.section}
+                                            </Col>
+                                            <Col xs={12} className="details">
+                                                Semester: {user.user.semester}
+                                            </Col>
+                                            <Col xs={12} className="details">
+                                                Branch: {user.user.branch}
+                                            </Col>
+                                        </> :
+                                        user.user.userType === TEACHER ?
                                             <>
                                                 <Col xs={12} className="details">
-                                                    Section: {user.user.section}
+                                                    Primary Subject: {user.user.subject}
                                                 </Col>
                                                 <Col xs={12} className="details">
-                                                    Semester: {user.user.semester}
+                                                    Highest Degree: {user.user.degree}
                                                 </Col>
                                                 <Col xs={12} className="details">
-                                                    Branch: {user.user.branch}
+                                                    Position : {user.user.position}
                                                 </Col>
                                             </> :
-                                            user.user.userType === TEACHER ?
-                                                <>
-                                                    <Col xs={12} className="details">
-                                                        Primary Subject: {user.user.subject}
-                                                    </Col>
-                                                    <Col xs={12} className="details">
-                                                        Highest Degree: {user.user.degree}
-                                                    </Col>
-                                                    <Col xs={12} className="details">
-                                                        Position : {user.user.position}
-                                                    </Col>
-                                                </> :
-                                                <>
-                                                    <Col xs={12} className="details">
-                                                        Role: {user.user.role}
-                                                    </Col>
-                                                    <Col xs={12} className="details">
-                                                        Highest Degree: {user.user.degree}
-                                                    </Col>
-                                                </>
+                                            <>
+                                                <Col xs={12} className="details">
+                                                    Role: {user.user.role}
+                                                </Col>
+                                                <Col xs={12} className="details">
+                                                    Highest Degree: {user.user.degree}
+                                                </Col>
+                                            </>
 
-                                    }
-                                    <Col xs={12} className="details" style={{ color: 'red', textAlign: 'center' }}>
-                                        Other info will be shown once user data is retrieved from college!
-                                    </Col>
-                                </Row>
-                            </div>
-                            <NotificationContainer />
-                        </Row> :
-                        <div style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', height: '100vh' }}>
-                            <ReactLoading type={"spin"} color={"blue"} height={'50px'} width={'50px'} />
+                                }
+                                <Col xs={12} className="details" style={{ color: 'red', textAlign: 'center' }}>
+                                    Other info will be shown once user data is retrieved from college!
+                                </Col>
+                            </Row>
                         </div>
-                }
-            </Container>
-        </>
+                        <NotificationContainer />
+                    </Row> :
+                    <div style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', height: '100vh' }}>
+                        <ReactLoading type={"spin"} color={"blue"} height={'50px'} width={'50px'} />
+                    </div>
+            }
+        </Container>
     )
 }
 

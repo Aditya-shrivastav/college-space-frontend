@@ -102,101 +102,99 @@ const MarkAttendancePage = ({ toggleSidebar, sideBarIsOpen, course }) => {
     }
 
     return (
-        <>
-            <div className="vector"></div>
-            < Container fluid className={classNames("content", { "is-open": sideBarIsOpen })}
-            >
-                {
-                    !sideBarIsOpen ?
-                        <Button color="gray" onClick={toggleSidebar} style={{ marginBottom: '10px', border: '1px solid black' }}>
-                            <FontAwesomeIcon icon={faAlignLeft} />
-                        </Button> :
-                        <div style={{ display: 'none' }}></div>
 
-                }
-                <Row id='panel-header-row' style={{ height: '50px', margin: '0 0.5em', padding: '0 0.2em', marginBottom: '3em' }}>
-                    <Col xs={6} style={{ alignSelf: 'center', fontFamily: 'Domine', fontSize: '18px', color: '#7EACF8' }}>
-                        Mark Attendance<FontAwesomeIcon icon={faChevronRight} style={{ marginLeft: '5px' }} />
-                    </Col>
-                    <Col className="gu-logo-page" xs={6} style={{ textAlign: 'end' }}>
-                        <img width="96px" height="90px" src={GuLogo} alt="logo" />
-                    </Col>
-                </Row>
-                {
-                    course ?
-                        <>
-                            <Row>
-                                <Col xs={12}>
-                                    <Form onSubmit={handleSubmit} name='student-attendance-form'>
-                                        <Row >
-                                            <Col xs={{ size: 6 }} md={{ size: 3, offset: 1 }}>
-                                                <FormGroup>
-                                                    <Label>Select Section: </Label>
-                                                    <Input type="select" onChange={handleChange('section')}>
-                                                        <option selected>None</option>
-                                                        {
-                                                            course.sections.map((section) => {
-                                                                return (
-                                                                    <option>{section}</option>
-                                                                )
-                                                            })
-                                                        }
-                                                    </Input>
-                                                </FormGroup>
-                                            </Col>
-                                            <Col xs={6} md={3}>
-                                                <FormGroup>
-                                                    <Label>Select Date: </Label>
-                                                    <Input type="date" onChange={handleChange('date')} />
-                                                </FormGroup>
-                                            </Col>
-                                            <Col xs={{ size: 5, offset: 4 }} md={{ size: 3, offset: 0 }} style={{ alignSelf: 'end', marginTop: '10px' }}>
-                                                <Button type="submit" color="primary">SUBMIT</Button>
-                                            </Col>
-                                        </Row>
-                                    </Form>
-                                </Col>
-                            </Row>
-                            {
-                                values.totalStudents.length > 0 ?
-                                    <Row id="students-data" style={{ margin: '30px' }}>
-                                        <Row style={{ borderBottom: '1px solid black', marginBottom: '30px', fontSize: '18px' }}>Students Name :</Row>
-                                        <Form>
-                                            <div className="students-list">
-                                                <Row>
+        < Container fluid className={classNames("content", { "is-open": sideBarIsOpen })}
+        >
+            {
+                !sideBarIsOpen ?
+                    <Button color="gray" onClick={toggleSidebar} style={{ marginBottom: '10px', border: '1px solid black' }}>
+                        <FontAwesomeIcon icon={faAlignLeft} />
+                    </Button> :
+                    <div style={{ display: 'none' }}></div>
+
+            }
+            <Row id='panel-header-row' style={{ height: '50px', margin: '0 0.5em', padding: '0 0.2em', marginBottom: '3em' }}>
+                <Col xs={6} style={{ alignSelf: 'center', fontFamily: 'Domine', fontSize: '18px', color: '#7EACF8' }}>
+                    Mark Attendance<FontAwesomeIcon icon={faChevronRight} style={{ marginLeft: '5px' }} />
+                </Col>
+                <Col className="gu-logo-page" xs={6} style={{ textAlign: 'end' }}>
+                    <img width="96px" height="90px" src={GuLogo} alt="logo" />
+                </Col>
+            </Row>
+            {
+                course ?
+                    <>
+                        <Row>
+                            <Col xs={12}>
+                                <Form onSubmit={handleSubmit} name='student-attendance-form'>
+                                    <Row >
+                                        <Col xs={{ size: 6 }} md={{ size: 3, offset: 1 }}>
+                                            <FormGroup>
+                                                <Label>Select Section: </Label>
+                                                <Input type="select" onChange={handleChange('section')}>
+                                                    <option selected>None</option>
                                                     {
-                                                        values.totalStudents.map((student) => {
+                                                        course.sections.map((section) => {
                                                             return (
-                                                                <Col xs={12} style={{ margin: '5px' }}>
-                                                                    <Input type="checkbox" onChange={handleChecked} value={student.userId} /> <Label>{student.name}</Label>
-                                                                </Col>
+                                                                <option>{section}</option>
                                                             )
                                                         })
                                                     }
-                                                </Row>
-                                            </div>
-                                            <Row >
-                                                <Button type="submit" size="sm" color="primary" style={{ width: 'fit-content', marginLeft: 'auto' }} onClick={submitAttendance}> SUBMIT</Button>
-                                                <Button type='cancel' size="sm" color="gray" style={{ width: 'fit-content', marginRight: 'auto' }} onClick={handleCancel}> Cancel</Button>
+                                                </Input>
+                                            </FormGroup>
+                                        </Col>
+                                        <Col xs={6} md={3}>
+                                            <FormGroup>
+                                                <Label>Select Date: </Label>
+                                                <Input type="date" onChange={handleChange('date')} />
+                                            </FormGroup>
+                                        </Col>
+                                        <Col xs={{ size: 5, offset: 4 }} md={{ size: 3, offset: 0 }} style={{ alignSelf: 'end', marginTop: '10px' }}>
+                                            <Button type="submit" color="primary">SUBMIT</Button>
+                                        </Col>
+                                    </Row>
+                                </Form>
+                            </Col>
+                        </Row>
+                        {
+                            values.totalStudents.length > 0 ?
+                                <Row id="students-data" style={{ margin: '30px' }}>
+                                    <Row style={{ borderBottom: '1px solid black', marginBottom: '30px', fontSize: '18px' }}>Students Name :</Row>
+                                    <Form>
+                                        <div className="students-list">
+                                            <Row>
+                                                {
+                                                    values.totalStudents.map((student) => {
+                                                        return (
+                                                            <Col xs={12} style={{ margin: '5px' }}>
+                                                                <Input type="checkbox" onChange={handleChecked} value={student.userId} /> <Label>{student.name}</Label>
+                                                            </Col>
+                                                        )
+                                                    })
+                                                }
                                             </Row>
-                                        </Form>
-                                    </Row> :
-                                    values.fetchStudentErr ?
-                                        <div style={{ margin: '1em', fontWeight: 'bold' }}>
-                                            {values.fetchStudentErr}
                                         </div>
-                                        :
-                                        <div></div>
-                            }
-                            <NotificationContainer />
-                        </> :
-                        <div style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', height: '100vh' }}>
-                            <ReactLoading type={"spin"} color={"blue"} height={'50px'} width={'50px'} />
-                        </div>
-                }
+                                        <Row >
+                                            <Button type="submit" size="sm" color="primary" style={{ width: 'fit-content', marginLeft: 'auto' }} onClick={submitAttendance}> SUBMIT</Button>
+                                            <Button type='cancel' size="sm" color="gray" style={{ width: 'fit-content', marginRight: 'auto' }} onClick={handleCancel}> Cancel</Button>
+                                        </Row>
+                                    </Form>
+                                </Row> :
+                                values.fetchStudentErr ?
+                                    <div style={{ margin: '1em', fontWeight: 'bold' }}>
+                                        {values.fetchStudentErr}
+                                    </div>
+                                    :
+                                    <div></div>
+                        }
+                        <NotificationContainer />
+                    </> :
+                    <div style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', height: '100vh' }}>
+                        <ReactLoading type={"spin"} color={"blue"} height={'50px'} width={'50px'} />
+                    </div>
+            }
 
-            </ Container>
-        </>
+        </ Container>
     );
 }
 

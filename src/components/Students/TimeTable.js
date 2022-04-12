@@ -91,54 +91,52 @@ const TimeTablePage = ({ toggleSidebar, sideBarIsOpen, student }) => {
     }
 
     return (
-        <>
-            <div className="vector"></div>
-            <Container fluid className={classNames("content", { "is-open": sideBarIsOpen })}
-            >
-                {
-                    !sideBarIsOpen ?
-                        <Button color="gray" onClick={toggleSidebar} style={{ marginBottom: '10px', border: '1px solid black' }}>
-                            <FontAwesomeIcon icon={faAlignLeft} />
-                        </Button> :
-                        <div style={{ display: 'none' }}></div>
 
-                }
-                <Row id='panel-header-row' style={{ height: '50px', margin: '0 0.5em', padding: '0 0.2em', marginBottom: '3em' }}>
-                    <Col xs={6} style={{ alignSelf: 'center', fontFamily: 'Domine', fontSize: '18px', color: '#7EACF8' }}>
-                        Time Table<FontAwesomeIcon icon={faChevronRight} style={{ marginLeft: '5px' }} />
-                    </Col>
-                    <Col className="gu-logo-page" xs={6} style={{ textAlign: 'end' }}>
-                        <img width="96px" height="90px" src={GuLogo} alt="logo" />
-                    </Col>
-                </Row>
-                <Row style={{ margin: '30px' }}>
-                    <Col xs={12} md={3} style={{ marginLeft: 'auto', width: 'fit-content', padding: '10px' }}>
-                        <div id="selectDay" style={{ fontSize: '20px', fontFamily: 'Ubuntu' }}>
-                            <select id="selectedDay" onChange={handleChange}></select>
-                        </div>
-                    </Col>
-                </Row>
-                {
-                    Object.keys(student.timeTable).length > 0 ?
-                        <div className='timetable-cards'>
-                            <Row style={{ margin: '2em' }}>
-                                {
-                                    RenderTimeTable()
-                                }
-                            </Row>
+        <Container fluid className={classNames("content", { "is-open": sideBarIsOpen })}
+        >
+            {
+                !sideBarIsOpen ?
+                    <Button color="gray" onClick={toggleSidebar} style={{ marginBottom: '10px', border: '1px solid black' }}>
+                        <FontAwesomeIcon icon={faAlignLeft} />
+                    </Button> :
+                    <div style={{ display: 'none' }}></div>
+
+            }
+            <Row id='panel-header-row' style={{ height: '50px', margin: '0 0.5em', padding: '0 0.2em', marginBottom: '3em' }}>
+                <Col xs={6} style={{ alignSelf: 'center', fontFamily: 'Domine', fontSize: '18px', color: '#7EACF8' }}>
+                    Time Table<FontAwesomeIcon icon={faChevronRight} style={{ marginLeft: '5px' }} />
+                </Col>
+                <Col className="gu-logo-page" xs={6} style={{ textAlign: 'end' }}>
+                    <img width="96px" height="90px" src={GuLogo} alt="logo" />
+                </Col>
+            </Row>
+            <Row style={{ margin: '30px' }}>
+                <Col xs={12} md={3} style={{ marginLeft: 'auto', width: 'fit-content', padding: '10px' }}>
+                    <div id="selectDay" style={{ fontSize: '20px', fontFamily: 'Ubuntu' }}>
+                        <select id="selectedDay" onChange={handleChange}></select>
+                    </div>
+                </Col>
+            </Row>
+            {
+                Object.keys(student.timeTable).length > 0 ?
+                    <div className='timetable-cards'>
+                        <Row style={{ margin: '2em' }}>
+                            {
+                                RenderTimeTable()
+                            }
+                        </Row>
+                    </div>
+                    :
+                    student.timeTableErr ?
+                        <div style={{ margin: '1em', fontWeight: 'bold' }}>
+                            {student.timeTableErr}
                         </div>
                         :
-                        student.timeTableErr ?
-                            <div style={{ margin: '1em', fontWeight: 'bold' }}>
-                                {student.timeTableErr}
-                            </div>
-                            :
-                            <div style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', height: '100vh' }}>
-                                <ReactLoading type={"spin"} color={"blue"} height={'50px'} width={'50px'} />
-                            </div>
-                }
-            </Container>
-        </>
+                        <div style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', height: '100vh' }}>
+                            <ReactLoading type={"spin"} color={"blue"} height={'50px'} width={'50px'} />
+                        </div>
+            }
+        </Container>
     )
 }
 

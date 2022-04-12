@@ -83,43 +83,41 @@ const EventsPage = ({ toggleSidebar, sideBarIsOpen, student }) => {
     })
 
     return (
-        <>
-            <div className="vector"></div>
-            <Container fluid className={classNames("content", { "is-open": sideBarIsOpen })}
-            >
-                {
-                    !sideBarIsOpen ?
-                        <Button color="gray" onClick={toggleSidebar} style={{ marginBottom: '10px', border: '1px solid black' }}>
-                            <FontAwesomeIcon icon={faAlignLeft} />
-                        </Button> :
-                        <div style={{ display: 'none' }}></div>
 
-                }
-                <Row id='panel-header-row' style={{ height: '50px', margin: '0 0.5em', padding: '0 0.2em', marginBottom: '3em' }}>
-                    <Col xs={6} style={{ alignSelf: 'center', fontFamily: 'Domine', fontSize: '18px', color: '#7EACF8' }}>
-                        Events<FontAwesomeIcon icon={faChevronRight} style={{ marginLeft: '5px' }} />
-                    </Col>
-                    <Col className="gu-logo-page" xs={6} style={{ textAlign: 'end' }}>
-                        <img width="96px" height="90px" src={GuLogo} alt="logo" />
-                    </Col>
-                </Row>
-                {
-                    events.length > 0 ?
-                        <div className='events-cards'>
-                            <Row id="event-rows">{renderEvents}</Row>
+        <Container fluid className={classNames("content", { "is-open": sideBarIsOpen })}
+        >
+            {
+                !sideBarIsOpen ?
+                    <Button color="gray" onClick={toggleSidebar} style={{ marginBottom: '10px', border: '1px solid black' }}>
+                        <FontAwesomeIcon icon={faAlignLeft} />
+                    </Button> :
+                    <div style={{ display: 'none' }}></div>
+
+            }
+            <Row id='panel-header-row' style={{ height: '50px', margin: '0 0.5em', padding: '0 0.2em', marginBottom: '3em' }}>
+                <Col xs={6} style={{ alignSelf: 'center', fontFamily: 'Domine', fontSize: '18px', color: '#7EACF8' }}>
+                    Events<FontAwesomeIcon icon={faChevronRight} style={{ marginLeft: '5px' }} />
+                </Col>
+                <Col className="gu-logo-page" xs={6} style={{ textAlign: 'end' }}>
+                    <img width="96px" height="90px" src={GuLogo} alt="logo" />
+                </Col>
+            </Row>
+            {
+                events.length > 0 ?
+                    <div className='events-cards'>
+                        <Row id="event-rows">{renderEvents}</Row>
+                    </div>
+                    :
+                    noEvent ?
+                        <div style={{ margin: '1em', fontWeight: 'bold' }}>
+                            'No Events Currently Going On!'
                         </div>
                         :
-                        noEvent ?
-                            <div style={{ margin: '1em', fontWeight: 'bold' }}>
-                                'No Events Currently Going On!'
-                            </div>
-                            :
-                            <div style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', height: '100vh' }}>
-                                <ReactLoading type={"spin"} color={"blue"} height={'50px'} width={'50px'} />
-                            </div>
-                }
-            </Container>
-        </>
+                        <div style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', height: '100vh' }}>
+                            <ReactLoading type={"spin"} color={"blue"} height={'50px'} width={'50px'} />
+                        </div>
+            }
+        </Container>
     )
 }
 

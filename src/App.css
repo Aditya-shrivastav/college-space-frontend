@@ -1,12 +1,26 @@
 body{
   overflow: hidden;
+  width: 100%;
+  height: 100vh;
+
 }
 
 .App {
-  overflow: hidden;
+  /* overflow: hidden; */
+  position: relative;
   display: flex;
-  width: 100vw;
+  background-image: url('./images/bg.png');
+  background-size: cover;
+  background-repeat: no-repeat;
+  width: 100%;
   height: 100vh;
+  /* border: 100px solid black; */
+}
+
+#home-container{
+  padding: 0;
+  margin: 0;
+  width: 100%;
 }
 
 /* Cards Section */
@@ -29,84 +43,97 @@ body{
 /* Card Section End */
 
 .login-body {
-  background: #FFFFFF;
-  position: relative;
+  /* background: #FFFFFF; */
+  /* position: relative; */
+  background-image: url('./images/login-bg.png');
+  background-size: cover;
+  background-repeat: no-repeat;
+  /* overflow-y: scroll; */
+  /* object-fit: cover; */
   height: 100vh;
   width: 100vw;
   margin: 0;
   padding: 0;
-  border: 1px solid black;
+  /* border: 100px solid black I !important; */
   font-family: "Domine", serif;
 }
 
-.vector{
-  position: absolute;
-  width: 1440.05px;
-  height: 1728.02px;
-  left: 115.16px;
-  top: 355.13px;
-  z-index: -1;
-  background: url('./images/vg-vector.png') no-repeat;
-}
 
 .app-name{
-  position: absolute;
+  /* position: absolute;
+  left: 79px;
+  top: 145px; */
   width: 128px;
   height: 64px;
-  left: 79px;
-  top: 145px;
   font-family: 'Montserrat';
   font-style: normal;
   font-weight: 800;
   font-size: 26px;
   line-height: 32px;
-  text-align: center;
+  /* text-align: center; */
   color: #FFFEFE;
 }
 
 .graduation-hat{
-  position: absolute;
+  /* position: absolute; */
   width: 100px;
   height: 100px;
-  left: 100px;
-  top: 38px;
+  /* left: 100px;
+  top: 38px; */
   object-fit: contain;
   background-image: url('./images/graduation-hat.png');
 }
-
+.login-first-col img, .second img{
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+}
 .notebook{
-  position: absolute;
-  width: 247px;
-  height: 256px;
-  left: 237px;
-  top: 270px;
+  /* position: absolute; */
+  width: 100%;
+  height: 100%;
+  max-width: 247px;
+  max-height: 256px;
+  /* left: 237px;
+  top: 270px; */
+  object-fit: contain;
   background: url('./images/notebook2.png') no-repeat;
 }
 
 .quote{
-  position: absolute;
-  width: 259px;
-  height: 62px;
-  left: 455px;
-  top: 360px;
+  /* position: absolute; */
+  /* width: 100%;
+  height: 100%; */
+  object-fit: contain;
+  /* left: 455px;
+  top: 360px; */
   font-family: 'Domine' ;
   font-style: normal;
   font-weight: bold;
-  font-size: 24px;
+  font-size: 1.5rem;
   line-height: 31px;
   text-align: center;
   color: #2B2B2B;
 }
 
 .login-box {
-  position: absolute;
-  width: 370px;
-  height: 620px;
+  /* position: absolute;
   left: 1010px;
-  top:  58px;
+  top:  58px; */
+  padding: 2em 3em;
+  width: 63%;
+  height: 80vh;
+  overflow-y: scroll;
+  /* border: 1px solid black; */
+  -ms-overflow-style: none;
+  scrollbar-width: none;
   background: #FFFEFE;
   border-radius: 20px;
   box-shadow: 15px 25px 10px rgba(0, 0, 0, 0.25);
+}
+
+.login-box::-webkit-scrollbar {
+  display: none;
 }
 
 .login-button{
@@ -146,7 +173,7 @@ body{
   max-width: 320px;
   background: linear-gradient(171.87deg, #A1C4FD 0%, #C2E9FB 85.3%);
   color: white;
-  height: 100vh;
+  height: 100%;
   margin-left: -320px;
   transition: all 0.5s;
 }
@@ -341,6 +368,13 @@ body{
   color: black !important;
   float: left;
 }
+
+.lower-svg-vector{
+  position: absolute;
+  right: -10;
+  bottom: 0;
+  /* top: 0; */
+}
 /* 
 .side-menu::-webkit-scrollbar {
   width: 10px;
@@ -357,6 +391,16 @@ body{
 
 
 /* Moto G4 and similar Sizes */
+
+@media only screen and (max-width: 1024px){
+  .login-first-col, .login-second-col .second, .login-third-col .quote{
+    display: none;
+  }
+
+  .login-box{
+    width: 90%;
+  }
+}
 
 @media only screen and (max-width: 500px) {
   /* body {
@@ -396,6 +440,10 @@ body{
     display: none;
   }
 
+  .login-first-col, .login-second-col .second, .login-third-col{
+    display: none;
+  }
+
   .login-body{
     position: unset;
     display: flex;
@@ -404,9 +452,10 @@ body{
   }
 
   .login-box {
-    position: unset;
-    padding: 10px;
-    height: inherit;
+    /* position: unset; */
+    /* padding: 10px; */
+    margin: 0;
+    height: 100vh;
     width: inherit !important;
     box-shadow: unset;
     border-radius: unset;
@@ -518,7 +567,7 @@ body{
 @media all and (device-width: 768px) and (device-height: 1024px) and (orientation:portrait) {
 
   .login-body{
-    overflow: hidden !important;
+    /* overflow: hidden !important; */
   }
 
   .content.is-open {
@@ -547,7 +596,7 @@ body{
   }
 
   .login-body .lower-svg-vector{
-    width: 1000px
+    width: 1000px;
   }
 
   .login-body .upper-svg-vector{
@@ -558,23 +607,27 @@ body{
   .app-name{
     width: 80px;
     height: 40px;
-    top: 100px;
-    left: 50px;
+    /* top: 100px;
+    left: 50px; */
     text-align: center;
   }
 
-  .graduation-hat{
+  /* .graduation-hat{
     top: 20px;
     left: 35px;
-  }
+  } */
 
   .notebook{
     display: none;
   }
 
+  .login-second-col{
+    display: none;
+  }
+
   .quote{
-    left: 100px;
-    top: 300px;
+    /* left: 100px;
+    top: 300px; */
     font-size: 20px
   }
 
@@ -624,7 +677,7 @@ body{
 @media all and (device-width: 1024px) and (min-device-height: 600px), 
 (device-width: 1280px) and (min-device-height: 800px){
   .login-body{
-    overflow: hidden !important;
+    /* overflow: hidden !important; */
   }
 
   .content.is-open {
@@ -658,24 +711,24 @@ body{
   .app-name{
     width: 80px;
     height: 40px;
-    top: 100px;
-    left: 50px;
+    /* top: 100px;
+    left: 50px; */
     text-align: center;
   }
 
-  .graduation-hat{
+  /* .graduation-hat{
     top: 20px;
     left: 35px;
-  }
+  } */
 
-  .notebook{
+  /* .notebook{
     left: 100px;
     top: 250px;
-  }
+  } */
 
   .quote{
-    left: 300px;
-    top: 350px;
+    /* left: 300px;
+    top: 350px; */
     font-size: 20px
   }
 
@@ -773,7 +826,7 @@ body{
 @media all and (device-width: 540px) and (device-height: 720px) and (orientation:portrait) {
   
   .login-body{
-    overflow: hidden !important;
+    /* overflow: hidden !important; */
   }
 
   .login-body .lower-svg-vector{
@@ -793,18 +846,22 @@ body{
   .app-name{
     width: 80px;
     height: 40px;
-    top: 100px;
-    left: 50px;
+    /* top: 100px;
+    left: 50px; */
     text-align: center;
   }
 
-  .graduation-hat{
+  /* .graduation-hat{
     top: 20px;
     left: 35px;
-  }
+  } */
 
   .notebook, .quote{
     display: none
+  }
+
+  .login-second-col, .login-third-col{
+    display: none;
   }
 
   .login-box{
@@ -861,7 +918,7 @@ body{
 
   .login-body{
     position: relative;
-    overflow: hidden;
+    /* overflow: hidden; */
   }
 
   .login-body .lower-svg-vector{
@@ -879,29 +936,29 @@ body{
   }
 
   .app-name{
-    top: 60px;
-    left: 10px;
+    /* top: 60px;
+    left: 10px; */
     text-align: center;
     font-size: 18px;
   }
 
   .quote{
-    top: 170px;
-    left: 180px;
+    /* top: 170px;
+    left: 180px; */
     width: 150px;
     font-size: 15px;
   }
 
   .graduation-hat{
     background: url('./images/graduation-hat-small.png') no-repeat;
-    top: 10px;
-    left: 40px;
+    /* top: 10px;
+    left: 40px; */
   }
 
   .notebook{
     background: url('./images/notebook2-sm.png') no-repeat;
-    top: 160px;
-    left: 70px;
+    /* top: 160px;
+    left: 70px; */
   }
 
   .login-box div img{
@@ -1053,7 +1110,7 @@ body{
 
 @media all and (min-device-width: 1300px) and (device-height: 1024px) and (orientation:landscape) {
   .App{
-    overflow: hidden !important;
+    /* overflow: hidden !important; */
   }
   .sidebar{
     overflow: hidden;

@@ -13,7 +13,6 @@ import TimeTablePage from './Students/TimeTable';
 import MarkAttendancePage from './Teachers/MarkAttendance';
 import ShowCourse from './Teachers/showCourses';
 
-
 const Dashboard = ({ user, student, logout = () => { }, attendance = () => { }, fetchCourses = () => { }, timeTable = () => { }, unreadEvents = () => { } }) => {
 
     const [isSidebarOpen, setSidebarOpen] = useState(true);
